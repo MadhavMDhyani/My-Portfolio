@@ -3,6 +3,18 @@
 @tailwind utilities;
 
 :root {
+  /* RGB channel variables for Tailwind /NN opacity modifiers */
+  --ghost-rgb: 247 247 255;
+  --indigo-brand-rgb: 39 24 126;
+  --indigo-950-rgb: 11 7 36;
+  --indigo-900-rgb: 21 14 79;
+  --indigo-800-rgb: 28 18 102;
+  --indigo-700-rgb: 56 37 170;
+  --indigo-400-rgb: 122 104 224;
+  --indigo-300-rgb: 158 143 244;
+  --indigo-200-rgb: 201 194 245;
+  --indigo-100-rgb: 233 230 252;
+
   /* Default Theme: Deep Indigo & Ghost White */
   --ghost: #F7F7FF;
   --indigo-brand: #27187E;
@@ -27,32 +39,11 @@
   --my: 50%;
 }
 
-.light {
-  --ghost: #150E4F;
-  --indigo-brand: #27187E;
-  --indigo-950: #FFFFFF;
-  --indigo-900: #F7F7FF;
-  --indigo-800: #EDEAFC;
-  --indigo-700: #D8D2FA;
-  --indigo-400: #5D47D9;
-  --indigo-300: #4933C4;
-  --indigo-200: #3A2699;
-  --indigo-100: #27187E;
-
-  --glass-surface-from: rgba(255, 255, 255, 0.75);
-  --glass-surface-to: rgba(247, 247, 255, 0.45);
-  --glass-border: rgba(39, 24, 126, 0.16);
-  --glass-border-hover: rgba(39, 24, 126, 0.35);
-  --glass-highlight: rgba(255, 255, 255, 0.9);
-  --glass-bottom: rgba(39, 24, 126, 0.05);
-  --glass-shadow: rgba(39, 24, 126, 0.08);
-}
-
 @layer base {
   html {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     scroll-behavior: smooth;
-    color-scheme: dark light;
+    color-scheme: dark;
   }
 
   body {
