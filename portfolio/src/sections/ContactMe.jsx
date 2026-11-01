@@ -3,16 +3,16 @@ import emailjs from "@emailjs/browser";
 import { personalInfo } from "../utils/data";
 import {
   FaEnvelope,
-  FaPhone,
   FaLocationDot,
   FaGithub,
   FaLinkedin,
   FaCheck,
+  FaPaperPlane,
 } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ContactMe = () => {
-  const [formData, setFormData] = useState({ name: "", email: "", review: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
@@ -26,10 +26,21 @@ const ContactMe = () => {
     setSending(true);
     setError("");
 
-    // Configuration via environment variables with fallbacks
-    const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_b8ho4zb";
-    const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_lzy3h8z";
-    const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "dVFJ7HODmFTPQKS12";
+    // Configuration exclusively via environment variables
+    const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      console.warn(
+        "EmailJS configuration missing. Please define VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY in your environment, and restrict allowed domains in the EmailJS dashboard."
+      );
+      setError(
+        `Email service configuration is not set. Please reach out directly to ${personalInfo.email}.`
+      );
+      setSending(false);
+      return;
+    }
 
     emailjs
       .send(
@@ -38,17 +49,17 @@ const ContactMe = () => {
         {
           from_name: formData.name,
           from_email: formData.email,
-          message: formData.review,
+          message: formData.message,
         },
         PUBLIC_KEY
       )
       .then(() => {
         setSubmitted(true);
-        setFormData({ name: "", email: "", review: "" });
+        setFormData({ name: "", email: "", message: "" });
       })
       .catch((err) => {
-        console.error("EmailJS error:", err);
-        setError("Something went wrong. Please try again in a moment.");
+        console.error("EmailJS submission error:", err);
+        setError("Something went wrong while sending. Please try again or email directly.");
       })
       .finally(() => {
         setSending(false);
@@ -74,15 +85,14 @@ const ContactMe = () => {
           </h2>
 
           <p className="text-indigo-200/90 text-base sm:text-lg mb-8 leading-relaxed font-normal">
-            Have a project in mind or want to talk tech? The fastest way to reach me is by email at{" "}
+            Have a project in mind, an engineering opportunity, or want to talk tech? The fastest way to reach me is by email at{" "}
             <a
               href={`mailto:${personalInfo.email}`}
               className="underline font-semibold text-ghost hover:text-indigo-300 transition-colors focus-visible:ring-2 focus-visible:ring-indigo-400 rounded"
             >
               {personalInfo.email}
             </a>{" "}
-            — I typically respond within a day. You can also call or text me directly at{" "}
-            <span className="font-semibold text-ghost">{personalInfo.phone}</span>, or connect with me on GitHub and LinkedIn below.
+            or via the message form below. I typically respond within 24 hours.
           </p>
 
           <div className="space-y-4 mb-8">
@@ -95,18 +105,6 @@ const ContactMe = () => {
                 className="hover:text-indigo-300 text-ghost font-medium transition-colors focus-visible:ring-2 focus-visible:ring-indigo-400 rounded py-1"
               >
                 {personalInfo.email}
-              </a>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl glass flex items-center justify-center text-indigo-300">
-                <FaPhone className="text-lg" />
-              </div>
-              <a
-                href={`tel:${personalInfo.phone.replace(/\s+/g, "")}`}
-                className="text-ghost font-medium hover:text-indigo-300 transition-colors focus-visible:ring-2 focus-visible:ring-indigo-400 rounded py-1"
-              >
-                {personalInfo.phone}
               </a>
             </div>
 
@@ -139,13 +137,13 @@ const ContactMe = () => {
             </a>
           </div>
 
-          {/* Review & Message Form */}
+          {/* Send Message Form */}
           <div className="pt-8 border-t border-ghost/15">
             <h3 className="font-display-title text-2xl sm:text-3xl text-ghost tracking-wide mb-2">
-              Leave a Review
+              Send a Message
             </h3>
             <p className="text-indigo-200/85 mb-6 text-sm">
-              Worked with me on a project? Share your name, email, and a short review below.
+              Looking to connect or hire? Drop your name, email, and project scope below.
             </p>
 
             <AnimatePresence>
@@ -160,7 +158,7 @@ const ContactMe = () => {
                     <FaCheck className="text-sm" />
                   </div>
                   <p className="text-sm font-medium">
-                    Thank you! Your message and review have been submitted successfully.
+                    Thank you! Your message has been sent successfully.
                   </p>
                 </motion.div>
               )}
@@ -212,15 +210,15 @@ const ContactMe = () => {
               </div>
 
               <div>
-                <label htmlFor="contact-review" className="sr-only">
-                  Your Review
+                <label htmlFor="contact-message" className="sr-only">
+                  Your Message
                 </label>
                 <textarea
-                  id="contact-review"
-                  name="review"
-                  value={formData.review}
+                  id="contact-message"
+                  name="message"
+                  value={formData.message}
                   onChange={handleChange}
-                  placeholder="Write your review or message here..."
+                  placeholder="Write your message here..."
                   required
                   rows={4}
                   className="w-full px-5 py-3.5 rounded-2xl glass text-ghost placeholder-indigo-200/50 border border-ghost/15 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-ghost/40 transition-all text-sm resize-none"
@@ -230,9 +228,10 @@ const ContactMe = () => {
               <button
                 type="submit"
                 disabled={sending}
-                className="btn-primary uppercase text-xs tracking-wider min-h-[44px] px-8 disabled:opacity-60 disabled:cursor-not-allowed font-semibold"
+                className="btn-primary uppercase text-xs tracking-wider min-h-[44px] px-8 disabled:opacity-60 disabled:cursor-not-allowed font-semibold flex items-center gap-2"
               >
-                {sending ? "Sending..." : "Submit Review"}
+                <FaPaperPlane className="text-xs" />
+                {sending ? "Sending..." : "Send Message"}
               </button>
             </form>
           </div>
