@@ -8,16 +8,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        ghost: 'var(--ghost)',
-        'indigo-brand': 'var(--indigo-brand)',
-        'indigo-950': 'var(--indigo-950)',
-        'indigo-900': 'var(--indigo-900)',
-        'indigo-800': 'var(--indigo-800)',
-        'indigo-700': 'var(--indigo-700)',
-        'indigo-400': 'var(--indigo-400)',
-        'indigo-300': 'var(--indigo-300)',
-        'indigo-200': 'var(--indigo-200)',
-        'indigo-100': 'var(--indigo-100)',
+        ghost: 'rgb(var(--ghost-rgb) / <alpha-value>)',
+        'indigo-brand': 'rgb(var(--indigo-brand-rgb) / <alpha-value>)',
+        'indigo-950': 'rgb(var(--indigo-950-rgb) / <alpha-value>)',
+        'indigo-900': 'rgb(var(--indigo-900-rgb) / <alpha-value>)',
+        'indigo-800': 'rgb(var(--indigo-800-rgb) / <alpha-value>)',
+        'indigo-700': 'rgb(var(--indigo-700-rgb) / <alpha-value>)',
+        'indigo-400': 'rgb(var(--indigo-400-rgb) / <alpha-value>)',
+        'indigo-300': 'rgb(var(--indigo-300-rgb) / <alpha-value>)',
+        'indigo-200': 'rgb(var(--indigo-200-rgb) / <alpha-value>)',
+        'indigo-100': 'rgb(var(--indigo-100-rgb) / <alpha-value>)',
       },
       fontFamily: {
         display: ['"League Gothic"', '"Anton"', 'sans-serif'],
