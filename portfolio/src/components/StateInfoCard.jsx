@@ -1,8 +1,10 @@
 const StateInfoCard = ({ count, label }) => {
   return (
-    <div className="flex-1 flex items-center gap-4 bg-gradient-to-b from-[#fcf4ec] to-[#ffffff] dark:from-[#0a0a0a] dark:to-[#050505] rounded-2xl p-5 border border-[#fee6cc] dark:border-[#1a1a1a] shadow-sm hover:shadow-md dark:shadow-black/30 transition-all">
-      <h4 className="text-3xl md:text-4xl font-bold text-[#b56141] dark:text-[#f4a44f]">{count}</h4>
-      <p className="text-xs md:text-sm font-medium text-slate-700 dark:text-slate-400 leading-snug whitespace-pre-line">
+    <div className="glass rounded-3xl p-6 flex items-center gap-5 border border-ghost/15 hover:border-ghost/30 transition-all duration-300">
+      <h4 className="font-display-title text-4xl sm:text-5xl text-ghost tracking-wide leading-none">
+        {count}
+      </h4>
+      <p className="text-xs sm:text-sm font-medium text-indigo-200 leading-snug whitespace-pre-line">
         {label}
       </p>
     </div>
