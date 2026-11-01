@@ -238,7 +238,6 @@ const ThreeHeroScene = () => {
 
         if (!isVisible || !isTabActive) return;
 
-        const delta = clock.getDelta();
         const time = clock.getElapsedTime();
 
         // Parallax lerp

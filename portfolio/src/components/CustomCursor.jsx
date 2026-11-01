@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { motion, useSpring, useMotionValue } from "framer-motion";
 
 const CustomCursor = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return (
+      window.matchMedia("(pointer: fine)").matches &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
+  });
   const [isHovered, setIsHovered] = useState(false);
 
   const cursorX = useMotionValue(-100);
@@ -13,12 +19,7 @@ const CustomCursor = () => {
   const smoothY = useSpring(cursorY, springConfig);
 
   useEffect(() => {
-    // Only enable on desktop with fine pointer and no reduced motion preference
-    const finePointer = window.matchMedia("(pointer: fine)").matches;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!finePointer || reducedMotion) return;
-
-    setIsVisible(true);
+    if (!isVisible) return;
 
     const handlePointerMove = (e) => {
       cursorX.set(e.clientX);
@@ -50,7 +51,7 @@ const CustomCursor = () => {
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("pointerover", handlePointerOver);
     };
-  }, [cursorX, cursorY]);
+  }, [isVisible, cursorX, cursorY]);
 
   if (!isVisible) return null;
 
