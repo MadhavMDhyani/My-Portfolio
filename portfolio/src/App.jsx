@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./sections/Hero";
 import AboutMe from "./sections/AboutMe";
@@ -14,40 +14,19 @@ import IntroReveal from "./components/IntroReveal";
 import { Analytics } from "@vercel/analytics/react";
 
 const App = () => {
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    try {
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme) {
-        return savedTheme === "dark";
-      }
-      return window.matchMedia("(prefers-color-scheme: dark)").matches;
-    } catch {
-      return true;
-    }
-  });
-
   useEffect(() => {
+    // Enforce dark mode regardless of OS theme
+    document.documentElement.classList.add("dark");
+    document.documentElement.classList.remove("light");
     try {
-      if (isDarkMode) {
-        document.documentElement.classList.add("dark");
-        document.documentElement.classList.remove("light");
-        localStorage.setItem("theme", "dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-        document.documentElement.classList.add("light");
-        localStorage.setItem("theme", "light");
-      }
+      localStorage.setItem("theme", "dark");
     } catch {
-      // safe fallback for restricted iframe/storage
+      // safe fallback
     }
-  }, [isDarkMode]);
-
-  const toggleDarkMode = () => {
-    setIsDarkMode((prev) => !prev);
-  };
+  }, []);
 
   return (
-    <div className="bg-indigo-950 text-ghost font-sans selection:bg-indigo-400/35 selection:text-ghost relative min-h-[100dvh] flex flex-col justify-between">
+    <div className="isolate text-ghost font-sans selection:bg-indigo-400/35 selection:text-ghost relative min-h-[100dvh] flex flex-col justify-between">
       {/* SVG Refraction Filter Definition */}
       <RefractionFilter />
 
@@ -64,7 +43,7 @@ const App = () => {
       <BackgroundBlobs />
 
       {/* Floating Pill Header & Navigation */}
-      <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      <Navbar />
 
       {/* Semantic Main Landmark */}
       <main id="main-content" className="flex-1">

@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import LOGO from "../assets/images/logo.png";
 import { MENU_LINKS } from "../utils/data";
-import { FaSun, FaMoon, FaBars, FaXmark } from "react-icons/fa6";
+import { FaBars, FaXmark } from "react-icons/fa6";
 
-const Navbar = ({ isDarkMode, toggleDarkMode }) => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [isVisible, setIsVisible] = useState(true);
@@ -129,15 +129,6 @@ const Navbar = ({ isDarkMode, toggleDarkMode }) => {
 
             {/* Right Controls */}
             <div className="flex items-center gap-2 sm:gap-3">
-              {/* Theme Toggle Button */}
-              <button
-                onClick={toggleDarkMode}
-                className="w-11 h-11 rounded-full glass flex items-center justify-center text-ghost hover:text-indigo-200 transition-colors focus-visible:ring-2 focus-visible:ring-indigo-400"
-                aria-label={isDarkMode ? "Switch to light theme" : "Switch to dark theme"}
-              >
-                {isDarkMode ? <FaSun className="text-base" /> : <FaMoon className="text-base" />}
-              </button>
-
               {/* Hire Me Desktop Button */}
               <a
                 href="#contact"

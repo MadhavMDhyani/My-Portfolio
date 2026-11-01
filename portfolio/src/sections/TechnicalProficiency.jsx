@@ -93,7 +93,7 @@ const TechnicalProficiency = () => {
                     <SkillCard
                       icon={<Icon />}
                       skillName={skill.name}
-                      progress={skill.progress}
+                      level={skill.level}
                       description={skill.description}
                     />
                   </TiltCard>
