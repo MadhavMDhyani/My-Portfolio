@@ -1,59 +1,84 @@
+import { motion } from "framer-motion";
 import { projects } from "../utils/data";
-import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
+import { FaArrowUpRightFromSquare, FaGithub } from "react-icons/fa6";
+import TiltCard from "../components/TiltCard";
 
 const Projects = () => {
   return (
-    <section id="projects" className="container mx-auto px-6 md:px-12 py-16">
-      <h2 className="text-3xl font-bold mb-8 bg-gradient-primary bg-clip-text text-transparent inline-block">
-        Featured Projects
-      </h2>
+    <section id="projects" className="container mx-auto px-6 md:px-12 py-20 relative z-10">
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6 }}
+        className="mb-12 text-center md:text-left"
+      >
+        <span className="text-xs font-semibold tracking-[0.25em] uppercase text-indigo-300">
+          Selected Works
+        </span>
+        <h2 className="font-display-title text-4xl sm:text-5xl md:text-6xl text-ghost mt-2 tracking-wide">
+          Featured Projects
+        </h2>
+      </motion.div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {projects.map((project) => (
-          <div
+        {projects.map((project, index) => (
+          <motion.div
             key={project.id}
-            className="p-6 rounded-3xl bg-white dark:bg-[#0a0a0a] border border-[#fee6cc] dark:border-[#1a1a1a] shadow-sm hover:shadow-md dark:shadow-black/30 transition-all flex flex-col justify-between"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, delay: index * 0.15 }}
+            className="h-full"
           >
-            <div>
-              <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">
-                {project.title}
-              </h3>
-              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
-                {project.description}
-              </p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                {project.technologies?.map((tech, idx) => (
-                  <span
-                    key={idx}
-                    className="px-3 py-1 text-xs font-semibold rounded-full bg-[#fee6cc] dark:bg-[#2a1a0e] text-[#ac573f] dark:text-[#f4a44f]"
-                  >
-                    {tech}
-                  </span>
-                ))}
+            <TiltCard maxTilt={7} className="h-full">
+              <div className="p-7 sm:p-9 flex flex-col justify-between h-full relative overflow-hidden">
+                <div>
+                  <h3 className="font-display-title text-2xl sm:text-3xl text-ghost tracking-wide mb-3">
+                    {project.title}
+                  </h3>
+
+                  <p className="text-indigo-200/90 text-sm sm:text-base leading-relaxed mb-6 font-normal">
+                    {project.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {project.technologies?.map((tech, idx) => (
+                      <span
+                        key={idx}
+                        className="px-3.5 py-1.5 text-xs font-medium rounded-full glass-pill text-indigo-200 border border-ghost/15"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 pt-4 border-t border-ghost/10">
+                  {project.liveLink && (
+                    <a
+                      href={project.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-primary text-xs uppercase tracking-wider py-2.5 px-5 min-h-[44px] gap-2 font-semibold"
+                    >
+                      Live Demo <FaArrowUpRightFromSquare className="text-xs" />
+                    </a>
+                  )}
+                  {project.githubLink && (
+                    <a
+                      href={project.githubLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-secondary text-xs uppercase tracking-wider py-2.5 px-5 min-h-[44px] gap-2 font-semibold"
+                    >
+                      GitHub <FaGithub className="text-sm" />
+                    </a>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="flex items-center gap-4">
-              {project.liveLink && (
-                <a
-                  href={project.liveLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm font-semibold text-[#ac573f] dark:text-[#f4a44f] hover:underline"
-                >
-                  Live Demo <FaExternalLinkAlt className="text-xs" />
-                </a>
-              )}
-              {project.githubLink && (
-                <a
-                  href={"https://github.com/MadhavMDhyani/Volaitile-Friday"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:underline"
-                >
-                  GitHub <FaGithub className="text-sm" />
-                </a>
-              )}
-            </div>
-          </div>
+            </TiltCard>
+          </motion.div>
         ))}
       </div>
     </section>

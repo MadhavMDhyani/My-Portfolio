@@ -1,29 +1,38 @@
 const SkillCard = ({ icon, skillName, description, progress }) => {
   return (
-    <div className="bg-white dark:bg-black rounded-2xl border border-[#fccbd4] dark:border-white/10 p-4 dark:shadow-[0_0_24px_-8px_rgba(255,138,61,0.15)] transition-shadow duration-300">
-      <div className="flex gap-3">
-        <div className="w-10 h-10 flex items-center justify-center text-primary dark:text-orange-400 bg-gradient-to-b from-[#fdeddd] to-[#ffffff] dark:from-black dark:to-black dark:border dark:border-white/10 rounded-xl">
-          {icon}
-        </div>
-
-        <div className="flex-1">
-          <div className="flex items-center justify-between">
-            <p className="text-black dark:text-white font-medium">{skillName}</p>
-            <p className="text-xs text-secondary dark:text-orange-400 font-medium">{progress}%</p>
+    <div className="glass rounded-2xl p-5 border border-ghost/15 hover:border-ghost/35 transition-all duration-300 flex flex-col justify-between h-full">
+      <div>
+        <div className="flex items-center gap-3.5 mb-3">
+          <div className="w-11 h-11 rounded-xl glass flex items-center justify-center text-indigo-300 text-xl border border-ghost/20 shadow-inner">
+            {icon}
           </div>
 
-          <div className="w-full bg-background dark:bg-white/5 rounded-md h-[5px] relative mt-2 overflow-hidden">
-            <div
-              className="bg-primary dark:bg-gradient-to-r dark:from-orange-500 dark:to-amber-300 h-[5px] rounded-md transition-all duration-700"
-              style={{ width: `${progress}%` }}
-            ></div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between">
+              <p className="text-ghost font-semibold text-sm sm:text-base truncate">
+                {skillName}
+              </p>
+              <p className="text-xs text-indigo-300 font-semibold ml-2">
+                {progress}%
+              </p>
+            </div>
+
+            {/* Progress track */}
+            <div className="w-full bg-indigo-950/60 rounded-full h-1.5 mt-2 overflow-hidden border border-ghost/10">
+              <div
+                className="h-full bg-gradient-to-r from-indigo-brand via-indigo-400 to-ghost rounded-full transition-all duration-700 ease-out shadow-[0_0_8px_rgba(122,104,224,0.6)]"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
           </div>
         </div>
+
+        <p className="text-xs text-indigo-200/85 leading-relaxed mt-2 line-clamp-3">
+          {description}
+        </p>
       </div>
-
-      <p className="text-xs text-gray-600 dark:text-gray-400 text-justify leading-5 mt-2">{description}</p>
     </div>
-  )
-}
+  );
+};
 
 export default SkillCard;

@@ -2,74 +2,106 @@ import { useState } from "react";
 import { SKILL_TABS, skills } from "../utils/data";
 import Tabs from "../components/Tabs";
 import SkillCard from "../components/SkillCard";
-import { motion } from "framer-motion";
+import TiltCard from "../components/TiltCard";
+import { motion, AnimatePresence } from "framer-motion";
 
 const TechnicalProficiency = () => {
-   const [tabData, setTabData] = useState(skills);
-   const [activeTab, setActiveTab] = useState("all");
+  const [tabData, setTabData] = useState(skills);
+  const [activeTab, setActiveTab] = useState("all");
 
-   const handleTabValueChange = (value) => {
-    if (value == "all") {
+  const handleTabValueChange = (value) => {
+    setActiveTab(value);
+    if (value === "all") {
       setTabData(skills);
-      setActiveTab("all");
-      return;
-    }
+    } else {
       const updatedList = skills.filter((skill) => skill.type === value);
       setTabData(updatedList);
-      setActiveTab(value);
+    }
+  };
 
-
-   }
+  // Double skills list for infinite marquee looping
+  const marqueeSkills = [...skills, ...skills];
 
   return (
-    <section id="skills" className="dark:bg-black mt-20 transition-colors">
-      <div className="container mx-auto p-10">
-        <div className="w-full lg:w-[60vw] mx-auto">
-          <h4 className="text-3xl font-bold text-center bg-gradient-primary bg-clip-text text-transparent inline-block w-full">
+    <section id="skills" className="py-20 relative z-10 overflow-hidden">
+      <div className="container mx-auto px-6 md:px-12">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-2xl mx-auto"
+        >
+          <span className="text-xs font-semibold tracking-[0.25em] uppercase text-indigo-300">
+            Expertise &amp; Tooling
+          </span>
+          <h2 className="font-display-title text-4xl sm:text-5xl md:text-6xl text-ghost mt-2 tracking-wide">
             Technical Proficiency
-          </h4>
-
-          <p className="text-sm text-center mt-4 leading-6 text-slate-600 dark:text-slate-400">
-            A versatile developer with hands-on expertise in modern technologies,
-            tools, frameworks and dedicated to building efficient, scalable and
-            user-centric solutions.
+          </h2>
+          <p className="text-sm sm:text-base text-indigo-200/90 mt-4 leading-relaxed">
+            A versatile developer with hands-on expertise in modern technologies, tools, and frameworks, dedicated to building efficient, scalable, and user-centric solutions.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 mt-8">
-          {skills.map((skill) => (
-            <div
-              key={skill.id}
-              className="p-6 rounded-2xl bg-white dark:bg-[#0a0a0a] border border-[#fee6cc] dark:border-[#1a1a1a] shadow-sm hover:shadow-md dark:shadow-black/30 transition-all text-center group cursor-pointer"
-            >
-              <p className="font-semibold text-slate-700 dark:text-slate-300 group-hover:text-[#ac573f] dark:group-hover:text-[#f4a44f] transition-colors">
-                {skill.name}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <Tabs
-           tabList={SKILL_TABS}
-           activeTab={activeTab}
-           onChange={handleTabValueChange}
-           /> 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 min-h-[43px]">
-           {tabData.map((skill, index) => (
-            <motion.div key={skill.id}
-              initial={{ opacity: 0, y: 20}}
-              animate={{opacity: 1, y: 0}}
-              transition={{ duration: 0.4, delay: index * 0.1}}
-              >
-              <SkillCard
-                icon={<skill.icon className="w-6 h-6" />}
-                skillName={skill.name}
-                progress={skill.progress}
-                description={skill.description}
-              />
-            </motion.div>
-           ))}
+        {/* Infinite Tech Marquee */}
+        <div className="relative mt-12 mb-8 py-4 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+          <div className="flex w-max gap-4 animate-marquee hover:[animation-play-state:paused] cursor-pointer">
+            {marqueeSkills.map((skill, index) => {
+              const Icon = skill.icon;
+              return (
+                <div
+                  key={`${skill.id}-${index}`}
+                  className="glass-pill px-5 py-2.5 flex items-center gap-3 border border-ghost/20 shadow-glass hover:border-ghost/50 transition-all select-none"
+                >
+                  <Icon className="text-indigo-300 text-lg flex-shrink-0" />
+                  <span className="text-sm font-semibold text-ghost whitespace-nowrap">
+                    {skill.name}
+                  </span>
+                </div>
+              );
+            })}
           </div>
+        </div>
+
+        {/* Category Tabs */}
+        <Tabs
+          tabList={SKILL_TABS}
+          activeTab={activeTab}
+          onChange={handleTabValueChange}
+        />
+
+        {/* Dynamic Skill Cards Grid with 3D Tilt */}
+        <motion.div
+          layout
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 min-h-[300px]"
+        >
+          <AnimatePresence mode="popLayout">
+            {tabData.map((skill, index) => {
+              const Icon = skill.icon;
+              return (
+                <motion.div
+                  key={skill.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: 15 }}
+                  transition={{ duration: 0.35, delay: index * 0.05 }}
+                  className="h-full"
+                >
+                  <TiltCard maxTilt={6} className="h-full">
+                    <SkillCard
+                      icon={<Icon />}
+                      skillName={skill.name}
+                      progress={skill.progress}
+                      description={skill.description}
+                    />
+                  </TiltCard>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );

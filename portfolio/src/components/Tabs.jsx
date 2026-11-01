@@ -1,33 +1,33 @@
 import { motion } from "framer-motion";
 
-const Tabs = ({tabList, activeTab, onChange}) => {
-    const getActiveStyles = (value) => {
-        return activeTab === value
-        ? "text-white bg-gradient-primary dark:shadow-[0_0_20px_-4px_rgba(255,138,61,0.6)]"
-        : "text-secondary dark:text-gray-500 bg-transparent";
-    };
-
-    return (
-    <div className='flex items-center justify-center my-10'>
-        <div className="bg-[#fff6eb] dark:bg-white/5 dark:border dark:border-white/10 rounded-full flex">
-        {tabList.map((tab) => (
-            <motion.button
-            key={tab.id}
-            initial={{ opacity: 0.8, scale: 1}}
-            animate={{
-                opacity: activeTab === tab.value ? 1 : 0.8,
-                scale: activeTab === tab.value ? 1.05 : 1,
-            }}
-            transition={{ duration : 0.2}}
-            className={`text-xs md:text-[15px] ${getActiveStyles(tab.value)} rounded-full px-4 md:px-10 py-[6px] md:py-3`}
-            onClick={() => onChange(tab.value)}
+const Tabs = ({ tabList, activeTab, onChange }) => {
+  return (
+    <div className="flex items-center justify-center my-10 overflow-x-auto py-2 px-1">
+      <div className="glass-pill p-1.5 flex items-center gap-1 sm:gap-2 border border-ghost/20 shadow-glass">
+        {tabList.map((tab) => {
+          const isActive = activeTab === tab.value;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => onChange(tab.value)}
+              className={`relative px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-medium transition-colors duration-200 min-h-[44px] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-indigo-400 ${
+                isActive ? "text-ghost font-semibold" : "text-indigo-200 hover:text-ghost"
+              }`}
             >
-                {tab.label}
-            </motion.button>
-        ))}
-        </div>
+              {tab.label}
+              {isActive && (
+                <motion.div
+                  layoutId="activeSkillTab"
+                  className="absolute inset-0 bg-indigo-400/35 border border-indigo-200/40 rounded-full -z-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]"
+                  transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                />
+              )}
+            </button>
+          );
+        })}
+      </div>
     </div>
-    )
-}
+  );
+};
 
 export default Tabs;
