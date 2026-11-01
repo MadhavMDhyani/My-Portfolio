@@ -9,6 +9,18 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [hasResume, setHasResume] = useState(false);
+
+  useEffect(() => {
+    fetch("/resume.pdf", { method: "HEAD" })
+      .then((res) => {
+        const type = res.headers.get("content-type") || "";
+        if (res.ok && !type.includes("text/html")) {
+          setHasResume(true);
+        }
+      })
+      .catch(() => setHasResume(false));
+  }, []);
 
   // Hide on scroll-down, show on scroll-up
   useEffect(() => {
@@ -129,6 +141,16 @@ const Navbar = () => {
 
             {/* Right Controls */}
             <div className="flex items-center gap-2 sm:gap-3">
+              {hasResume && (
+                <a
+                  href="/resume.pdf"
+                  download="Madhav_Dhyani_Resume.pdf"
+                  className="hidden sm:inline-flex btn-secondary text-xs uppercase tracking-wider font-semibold py-2 px-4 min-h-[44px]"
+                >
+                  Resume
+                </a>
+              )}
+
               {/* Hire Me Desktop Button */}
               <a
                 href="#contact"
@@ -204,7 +226,17 @@ const Navbar = () => {
                 })}
               </ul>
 
-              <div className="mt-6 pt-4 border-t border-indigo-200/15">
+              <div className="mt-6 pt-4 border-t border-indigo-200/15 flex flex-col gap-2">
+                {hasResume && (
+                  <a
+                    href="/resume.pdf"
+                    download="Madhav_Dhyani_Resume.pdf"
+                    onClick={closeMenu}
+                    className="btn-secondary w-full text-center justify-center py-3 text-sm uppercase tracking-wider font-semibold"
+                  >
+                    Download Resume
+                  </a>
+                )}
                 <a
                   href="#contact"
                   onClick={closeMenu}

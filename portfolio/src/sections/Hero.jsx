@@ -1,15 +1,14 @@
-import { useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import PROFILE_PIC from "../assets/images/profile-pic.jpg";
 import {
-  FaReact,
-  FaNodeJs,
-  FaJs,
+  FaJava,
   FaGithub,
   FaLinkedin,
-  FaDatabase,
   FaServer,
+  FaFileArrowDown,
 } from "react-icons/fa6";
+import { SiSpringboot, SiMysql, SiDocker } from "react-icons/si";
 import { personalInfo, STATS } from "../utils/data";
 import StateInfoCard from "../components/StateInfoCard";
 import MagneticButton from "../components/MagneticButton";
@@ -17,6 +16,19 @@ import Hero3DCanvas from "../components/Hero3DCanvas";
 
 const Hero = () => {
   const sectionRef = useRef(null);
+  const [hasResume, setHasResume] = useState(false);
+
+  useEffect(() => {
+    fetch("/resume.pdf", { method: "HEAD" })
+      .then((res) => {
+        const type = res.headers.get("content-type") || "";
+        if (res.ok && !type.includes("text/html")) {
+          setHasResume(true);
+        }
+      })
+      .catch(() => setHasResume(false));
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
@@ -26,7 +38,7 @@ const Hero = () => {
   const orbY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.2]);
 
-  const headline = "Building Scalable & User Centric Web Apps";
+  const headline = "Architecting Scalable Backend Systems & APIs";
   const words = headline.split(" ");
 
   const containerVariants = {
@@ -77,7 +89,7 @@ const Hero = () => {
             >
               <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
               <span className="text-xs uppercase tracking-widest text-indigo-200 font-semibold">
-                Welcome to my Portfolio
+                Backend &amp; Cloud Engineering
               </span>
             </motion.div>
 
@@ -119,7 +131,7 @@ const Hero = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="text-indigo-200/90 text-sm sm:text-base mt-5 leading-relaxed font-normal max-w-lg"
             >
-              I'm a passionate JavaScript and Backend Developer with a strong focus on creating scalable, high-performance, and user-centric web applications. I strive to build seamless digital experiences that solve real-world problems.
+              I'm a backend developer specializing in Java, Spring Boot, microservices architecture, and relational database systems. I build performant, resilient server-side applications and high-throughput REST APIs designed for scale.
             </motion.p>
 
             {/* CTA Magnetic Action Buttons */}
@@ -127,7 +139,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mt-8"
+              className="flex flex-wrap justify-center lg:justify-start gap-4 mt-8"
             >
               <MagneticButton
                 href="#projects"
@@ -141,6 +153,15 @@ const Hero = () => {
               >
                 Contact Me
               </MagneticButton>
+              {hasResume && (
+                <MagneticButton
+                  href="/resume.pdf"
+                  download="Madhav_Dhyani_Resume.pdf"
+                  className="btn-secondary uppercase text-xs tracking-wider gap-2"
+                >
+                  <FaFileArrowDown className="text-sm" /> Download Resume
+                </MagneticButton>
+              )}
             </motion.div>
 
             {/* Social Links */}
@@ -181,30 +202,30 @@ const Hero = () => {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
             className="relative flex justify-center items-center"
           >
-            {/* Tech Badges floating */}
+            {/* Backend Tech Badges floating */}
             <div className="absolute -top-3 -left-4 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass animate-bounce [animation-duration:3.5s]">
-              <FaReact className="text-indigo-300 text-xl" />
-              <span className="text-xs font-semibold text-ghost">React</span>
+              <FaJava className="text-indigo-300 text-xl" />
+              <span className="text-xs font-semibold text-ghost">Java</span>
             </div>
 
             <div className="absolute top-1/4 -right-5 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass animate-bounce [animation-duration:4s] [animation-delay:0.3s]">
-              <FaNodeJs className="text-indigo-300 text-xl" />
-              <span className="text-xs font-semibold text-ghost">Node.js</span>
+              <SiSpringboot className="text-indigo-300 text-xl" />
+              <span className="text-xs font-semibold text-ghost">Spring Boot</span>
             </div>
 
             <div className="absolute -bottom-3 left-4 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass">
-              <FaJs className="text-indigo-200 text-xl" />
-              <span className="text-xs font-semibold text-ghost">JavaScript</span>
+              <SiMysql className="text-indigo-200 text-xl" />
+              <span className="text-xs font-semibold text-ghost">MySQL</span>
             </div>
 
             <div className="absolute -bottom-3 -right-2 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass animate-bounce [animation-duration:4.2s] [animation-delay:0.6s]">
-              <FaDatabase className="text-indigo-300 text-xl" />
-              <span className="text-xs font-semibold text-ghost">Databases</span>
+              <FaServer className="text-indigo-300 text-lg" />
+              <span className="text-xs font-semibold text-ghost">REST APIs</span>
             </div>
 
             <div className="absolute -top-3 right-6 px-3 py-1.5 glass-pill flex items-center gap-2 z-20 shadow-glass">
-              <FaServer className="text-indigo-200 text-lg" />
-              <span className="text-xs font-semibold text-ghost">APIs</span>
+              <SiDocker className="text-indigo-200 text-lg" />
+              <span className="text-xs font-semibold text-ghost">Docker</span>
             </div>
 
             {/* Profile Image Glass Container */}
