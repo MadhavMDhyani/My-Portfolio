@@ -1,29 +1,44 @@
-import { useState, useEffect } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './sections/Hero';
-import AboutMe from './sections/AboutMe';
-import TechnicalProficiency from './sections/TechnicalProficiency';
-import Projects from './sections/Projects';
-import ContactMe from './sections/ContactMe';
-import Footer from './sections/Footer';
+import { useState, useEffect } from "react";
+import Navbar from "./components/Navbar";
+import Hero from "./sections/Hero";
+import AboutMe from "./sections/AboutMe";
+import TechnicalProficiency from "./sections/TechnicalProficiency";
+import Projects from "./sections/Projects";
+import ContactMe from "./sections/ContactMe";
+import Footer from "./sections/Footer";
+import RefractionFilter from "./components/RefractionFilter";
+import BackgroundBlobs from "./components/BackgroundBlobs";
+import ScrollProgressBar from "./components/ScrollProgressBar";
+import CustomCursor from "./components/CustomCursor";
+import IntroReveal from "./components/IntroReveal";
 import { Analytics } from "@vercel/analytics/react";
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      return savedTheme === 'dark';
+    try {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        return savedTheme === "dark";
+      }
+      return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    } catch {
+      return true;
     }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
   useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+    try {
+      if (isDarkMode) {
+        document.documentElement.classList.add("dark");
+        document.documentElement.classList.remove("light");
+        localStorage.setItem("theme", "dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.classList.add("light");
+        localStorage.setItem("theme", "light");
+      }
+    } catch {
+      // safe fallback for restricted iframe/storage
     }
   }, [isDarkMode]);
 
@@ -32,14 +47,38 @@ const App = () => {
   };
 
   return (
-    <div className="bg-[#FFFCF8] dark:bg-black min-h-screen text-slate-800 dark:text-slate-100 font-sans transition-colors duration-300">
+    <div className="bg-indigo-950 text-ghost font-sans selection:bg-indigo-400/35 selection:text-ghost relative min-h-[100dvh] flex flex-col justify-between">
+      {/* SVG Refraction Filter Definition */}
+      <RefractionFilter />
+
+      {/* Top Scroll Progress Bar */}
+      <ScrollProgressBar />
+
+      {/* Desktop Custom Pointer Follower */}
+      <CustomCursor />
+
+      {/* Session Intro Name Reveal */}
+      <IntroReveal />
+
+      {/* Ambient Liquid Blobs & Noise Background */}
+      <BackgroundBlobs />
+
+      {/* Floating Pill Header & Navigation */}
       <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-      <Hero />
-      <AboutMe />
-      <TechnicalProficiency />
-      <Projects />
-      <ContactMe />
+
+      {/* Semantic Main Landmark */}
+      <main id="main-content" className="flex-1">
+        <Hero />
+        <AboutMe />
+        <TechnicalProficiency />
+        <Projects />
+        <ContactMe />
+      </main>
+
+      {/* Footer Landmark */}
       <Footer />
+
+      {/* Vercel Analytics */}
       <Analytics />
     </div>
   );

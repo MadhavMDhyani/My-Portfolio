@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "dev": "npm run dev --prefix portfolio",
+    "build": "npm run build --prefix portfolio",
+    "lint": "npm run lint --prefix portfolio",
+    "preview": "npm run preview --prefix portfolio"
+  },
   "devDependencies": {
     "autoprefixer": "^10.5.4",
     "postcss": "^8.5.22",
