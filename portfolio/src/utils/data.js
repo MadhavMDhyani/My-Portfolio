@@ -1,113 +1,147 @@
 import {
-  FaHtml5,
-  FaCss3Alt,
+  FaJava,
+  FaGitAlt,
+  FaDocker,
+  FaServer,
   FaJs,
-  FaReact
-} from "react-icons/fa";
+  FaReact,
+} from "react-icons/fa6";
 
-import { SiMongodb, SiTailwindcss, SiVite, SiSpringboot } from "react-icons/si";
+import {
+  SiSpringboot,
+  SiMysql,
+  SiPostgresql,
+  SiTailwindcss,
+} from "react-icons/si";
 
 export const personalInfo = {
   name: "Madhav Dhyani",
-  role: "Backend Developer",
-  bio: "Hi, This is Madhav Dhyani, a passionate Backend Developer.",
+  role: "Java & Backend Developer",
+  bio: "Hi, This is Madhav Dhyani, a passionate Java and Backend Developer specializing in scalable Spring Boot services, database modeling, and performant REST APIs.",
   email: "dhyani.pankaj811@gmail.com",
-  phone: "+91 9602938300",
   location: "Indore, India",
-  github: "https://github.com/madhavdhyani",
+  github: "https://github.com/MadhavMDhyani",
+  // TODO: Verify LinkedIn URL with your personal profile handle
   linkedin: "https://linkedin.com/in/madhavdhyani",
-  resume: "/resume.pdf"
+  resume: "/resume.pdf",
 };
 
 export const skills = [
   {
     id: 1,
-    name: "HTML5",
-    icon: FaHtml5,
-    progress:95,
-    description:"Expert in structuring web content with semantic HTML, accessibility, and SEO-friendly markup.",
-    type:"frontend",
-
+    name: "Java",
+    icon: FaJava,
+    level: "Core",
+    description: "Proficient in object-oriented programming, modern Java (8/11/17+), concurrency, and core JVM concepts.",
+    type: "backend",
   },
   {
     id: 2,
-    name: "CSS3",
-    icon: FaCss3Alt,
-    progress:80,
-    description: "Proficient in creating responsive layouts, animations, Flexbox, Grid, and modern UI designs.",
-    type:"frontend",
+    name: "Spring Boot",
+    icon: SiSpringboot,
+    level: "Core",
+    description: "Hands-on experience developing REST APIs, dependency injection, MVC architecture, Spring Security, and microservices.",
+    type: "backend",
   },
   {
     id: 3,
-    name: "JavaScript",
-    icon: FaJs,
-    progress:100,
-    description: "Skilled in writing clean ES6+ JavaScript, DOM manipulation, asynchronous programming, and APIs.",
-    type:"frontend",
+    name: "REST APIs",
+    icon: FaServer,
+    level: "Core",
+    description: "Designing secure, stateless, performant HTTP interfaces with comprehensive error handling and documentation.",
+    type: "backend",
   },
   {
     id: 4,
-    name: "React",
-    icon: FaReact,
-    progress:100,
-    description: "Experienced in building reusable components, managing state, routing, and developing scalable React applications.",
-    type:"frontend",
+    name: "MySQL",
+    icon: SiMysql,
+    level: "Core",
+    description: "Relational database schema modeling, indexing, foreign keys, normalization, and ACID transaction safety.",
+    type: "backend",
   },
   {
     id: 5,
-    name: "Vite",
-    icon: SiVite,
-    progress:85,
-    description: "Fast build tool used for creating modern React applications with optimized development and production builds.",
-    type:"tools",
+    name: "PostgreSQL",
+    icon: SiPostgresql,
+    level: "Comfortable",
+    description: "Experience with advanced PostgreSQL features, complex querying, constraints, and data integrity.",
+    type: "backend",
   },
   {
     id: 6,
-    name: "Tailwind CSS",
-    icon: SiTailwindcss,
-    progress:90,
-    description: "Utility-first CSS framework for building responsive, modern, and highly customizable user interfaces.",
-    type:"frontend",
+    name: "Git",
+    icon: FaGitAlt,
+    level: "Core",
+    description: "Version control workflows, branching strategies, collaboration, merge conflict resolution, and CI/CD integration.",
+    type: "tools",
   },
   {
     id: 7,
-    name: "MongoDB",
-    icon: SiMongodb,
-    progress: 75,
-    description: "Experienced in designing and managing NoSQL database schema design, indexing, and query optimization.",
-    type:"backend",
+    name: "Docker",
+    icon: FaDocker,
+    level: "Comfortable",
+    description: "Containerizing backend services, creating multi-stage Dockerfiles, and managing local container environments.",
+    type: "tools",
   },
   {
     id: 8,
-    name: "Spring Boot",
-    icon: SiSpringboot,
-    progress: 85,
-    description: "Experienced in building REST APIs, implementing MVC architecture, integrating databases, and developing scalable backend applications with Spring Boot",
-    type: "backend",
-
+    name: "React",
+    icon: FaReact,
+    level: "Comfortable",
+    description: "Building responsive SPAs, component-driven UI architectures, and integrating with REST backends.",
+    type: "frontend",
   },
-  
+  {
+    id: 9,
+    name: "JavaScript",
+    icon: FaJs,
+    level: "Comfortable",
+    description: "ES6+ modern syntax, asynchronous programming (Promises/async-await), and DOM manipulation.",
+    type: "frontend",
+  },
+  {
+    id: 10,
+    name: "Tailwind CSS",
+    icon: SiTailwindcss,
+    level: "Comfortable",
+    description: "Utility-first modern styling, responsive layouts, glassmorphism, and custom design tokens.",
+    type: "frontend",
+  },
 ];
 
 export const projects = [
   {
     id: 1,
-    title: "AI Chatbot Platform",
-    description: "A full-stack conversational AI application delivering context-aware, real-time responses through a streaming chat interface. Features persistent conversation history, prompt engineering for domain-specific accuracy, and a modular backend architecture designed for easy integration of additional language models.",
-    image: "./assets/project1.jpg",
-    technologies: ["React", "Node.js", "OpenAI API", "MongoDB"],
-    liveLink: "https://your-live-site.com",
-    githubLink: "https://github.com/yourusername/project1"
+    title: "Volaitile Friday",
+    description: "A full-stack application delivering interactive workflows and real-time updates. Engineered for high performance, state management, and reliable data synchronization.",
+    image: "/projects/volatile-friday.svg",
+    technologies: ["React", "Node.js", "Express", "MongoDB"],
+    githubLink: "https://github.com/MadhavMDhyani/Volaitile-Friday",
+    // TODO: Add live deployment link if hosted
+    liveLink: "",
   },
   {
     id: 2,
-    title: "Ride-Hailing App (Uber Clone)",
-    description: "A real-time ride-booking platform replicating core Uber functionality, including live driver-rider tracking, dynamic fare estimation, and automated ride matching. Built with a scalable backend for handling concurrent location updates and a responsive, map-driven user interface.",
-    image: "./assets/project2.jpg",
-    technologies: ["React", "Node.js", "Socket.io", "MongoDB"],
-    liveLink: "https://your-live-site2.com",
-    githubLink: "https://github.com/yourusername/project2"
-  }
+    title: "Spring Boot Journal Application",
+    description: "A secure RESTful journaling backend built with Spring Boot, Spring Security, and JWT. Features role-based access control, relational database persistence, and comprehensive unit tests.",
+    image: "/projects/journal-app.svg",
+    technologies: ["Java", "Spring Boot", "Spring Security", "MySQL", "JWT"],
+    // TODO: Verify repository name if different
+    githubLink: "https://github.com/MadhavMDhyani/journal-app",
+    // TODO: Add live demo URL when deployed
+    liveLink: "",
+  },
+  {
+    id: 3,
+    title: "AEGIS-ANC (Active Noise Cancellation)",
+    description: "An acoustic engineering and digital signal processing system for real-time noise cancellation. Filters background ambient frequencies to achieve high-fidelity audio output.",
+    image: "/projects/aegis-anc.svg",
+    technologies: ["Python", "Digital Signal Processing", "Acoustics", "Low-Latency Audio"],
+    // TODO: Verify repository name if different
+    githubLink: "https://github.com/MadhavMDhyani/AEGIS-ANC",
+    // TODO: Add live project demo link
+    liveLink: "",
+  },
 ];
 
 export const MENU_LINKS = [
@@ -144,17 +178,14 @@ export const MENU_LINKS = [
 ];
 
 export const STATS = [
-  { id: 1, count: "02+", label: "Years of\nExperience" },
-  { id: 2, count: "10+", label: "Projects\nCompleted" },
-  { id: 3, count: "15+", label: "Technologies\nMastered" }
+  { id: 1, count: "READY", label: "Production-Grade\nAPIs & Services" },
+  { id: 2, count: "JAVA", label: "Spring Boot &\nMicroservices" },
+  { id: 3, count: "SQL", label: "Relational Modeling\n& Database Design" },
 ];
-
 
 export const SKILL_TABS = [
   { id: "01", label: "All", value: "all" },
-  { id: "02", label: "Frontend", value: "frontend" },
-  { id: "03", label: "Backend", value: "backend" },
-  { id: "04", label: "Tools", value: "tools" },
-  { id: "05", label: "Skills", value: "soft-skills" },
-  
+  { id: "02", label: "Backend", value: "backend" },
+  { id: "03", label: "Tools", value: "tools" },
+  { id: "04", label: "Frontend", value: "frontend" },
 ];

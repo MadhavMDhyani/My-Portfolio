@@ -1,4 +1,17 @@
-const SkillCard = ({ icon, skillName, description, progress }) => {
+const SkillCard = ({ icon, skillName, description, level = "Core" }) => {
+  const getBadgeStyle = (lvl) => {
+    switch (lvl) {
+      case "Core":
+        return "bg-indigo-400/25 text-ghost border-indigo-200/40 shadow-[0_0_10px_rgba(122,104,224,0.35)]";
+      case "Comfortable":
+        return "bg-indigo-700/25 text-indigo-200 border-indigo-400/25";
+      case "Learning":
+        return "bg-ghost/10 text-indigo-300 border-ghost/15";
+      default:
+        return "bg-indigo-400/20 text-ghost border-ghost/20";
+    }
+  };
+
   return (
     <div className="glass rounded-2xl p-5 border border-ghost/15 hover:border-ghost/35 transition-all duration-300 flex flex-col justify-between h-full">
       <div>
@@ -12,17 +25,13 @@ const SkillCard = ({ icon, skillName, description, progress }) => {
               <p className="text-ghost font-semibold text-sm sm:text-base truncate">
                 {skillName}
               </p>
-              <p className="text-xs text-indigo-300 font-semibold ml-2">
-                {progress}%
-              </p>
-            </div>
-
-            {/* Progress track */}
-            <div className="w-full bg-indigo-950/60 rounded-full h-1.5 mt-2 overflow-hidden border border-ghost/10">
-              <div
-                className="h-full bg-gradient-to-r from-indigo-brand via-indigo-400 to-ghost rounded-full transition-all duration-700 ease-out shadow-[0_0_8px_rgba(122,104,224,0.6)]"
-                style={{ width: `${progress}%` }}
-              />
+              <span
+                className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full border ${getBadgeStyle(
+                  level
+                )}`}
+              >
+                {level}
+              </span>
             </div>
           </div>
         </div>
