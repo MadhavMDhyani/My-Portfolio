@@ -84,7 +84,7 @@ const ThreeHeroScene = () => {
       scene.add(rimLight);
 
       // Centrepiece Liquid Orb
-      const orbDetail = isMobile ? 4 : 28;
+      const orbDetail = isMobile ? 4 : 12;
       const orbRadius = 1.35;
       const geometry = new THREE.IcosahedronGeometry(orbRadius, orbDetail);
       originalPositions = geometry.attributes.position.clone();
@@ -219,12 +219,14 @@ const ThreeHeroScene = () => {
       };
       const handleContextRestored = () => {
         handleResize();
+        if (!prefersReducedMotion) animFrameId = requestAnimationFrame(animate);
       };
       canvasEl.addEventListener("webglcontextlost", handleContextLost, false);
       canvasEl.addEventListener("webglcontextrestored", handleContextRestored, false);
 
       // Render Loop
       let clock = new THREE.Clock();
+      let frameCount = 0;
 
       const animate = () => {
         if (!renderer || !scene || !camera) return;
@@ -271,7 +273,8 @@ const ThreeHeroScene = () => {
         }
 
         posAttr.needsUpdate = true;
-        geometry.computeVertexNormals();
+        frameCount++;
+        if (frameCount % 2 === 0) geometry.computeVertexNormals();
 
         // Particles gentle drift
         particleMesh.rotation.y = -time * 0.04;
