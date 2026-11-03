@@ -140,33 +140,25 @@ export const projects = [
     id: 1,
     title: "Volaitile Friday",
     description: "A full-stack application delivering interactive workflows and real-time updates. Engineered for high performance, state management, and reliable data synchronization.",
-    image: "/projects/volatile-friday.svg",
+    image: "/projects/volatile-friday.jpg",
     technologies: ["React", "Node.js", "Express", "MongoDB"],
     githubLink: "https://github.com/MadhavMDhyani/Volaitile-Friday",
-    // TODO: Add live deployment link if hosted
-    liveLink: "",
   },
   {
     id: 2,
     title: "Spring Boot Journal Application",
     description: "A secure RESTful journaling backend built with Spring Boot, Spring Security, and JWT. Features role-based access control, relational database persistence, and comprehensive unit tests.",
-    image: "/projects/journal-app.svg",
+    image: "/projects/journal-app.jpg",
     technologies: ["Java", "Spring Boot", "Spring Security", "MySQL", "JWT"],
-    // TODO: Verify repository name if different
     githubLink: "https://github.com/MadhavMDhyani/journal-app",
-    // TODO: Add live demo URL when deployed
-    liveLink: "",
   },
   {
     id: 3,
     title: "AEGIS-ANC (Active Noise Cancellation)",
     description: "An acoustic engineering and digital signal processing system for real-time noise cancellation. Filters background ambient frequencies to achieve high-fidelity audio output.",
-    image: "/projects/aegis-anc.svg",
+    image: "/projects/aegis-anc.jpg",
     technologies: ["Python", "Digital Signal Processing", "Acoustics", "Low-Latency Audio"],
-    // TODO: Verify repository name if different
     githubLink: "https://github.com/MadhavMDhyani/AEGIS-ANC",
-    // TODO: Add live project demo link
-    liveLink: "",
   },
 ];
 
