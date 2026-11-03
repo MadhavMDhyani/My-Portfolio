@@ -204,9 +204,9 @@ export const MENU_LINKS = [
 ];
 
 export const STATS = [
-  { id: 1, count: "READY", label: "Production-Grade\nAPIs & Services" },
-  { id: 2, count: "JAVA", label: "Spring Boot &\nMicroservices" },
-  { id: 3, count: "SQL", label: "Relational Modeling\n& Database Design" },
+  { id: 1, count: "02+", label: "Years of\nExperience" },
+  { id: 2, count: "10+", label: "Projects\nCompleted" },
+  { id: 3, count: "15+", label: "Technologies\nMastered" },
 ];
 
 export const SKILL_TABS = [
