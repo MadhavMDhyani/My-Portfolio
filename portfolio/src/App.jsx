@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./sections/Hero";
 import AboutMe from "./sections/AboutMe";
@@ -14,19 +13,8 @@ import IntroReveal from "./components/IntroReveal";
 import { Analytics } from "@vercel/analytics/react";
 
 const App = () => {
-  useEffect(() => {
-    // Enforce dark mode regardless of OS theme
-    document.documentElement.classList.add("dark");
-    document.documentElement.classList.remove("light");
-    try {
-      localStorage.setItem("theme", "dark");
-    } catch {
-      // safe fallback
-    }
-  }, []);
-
   return (
-    <div className="isolate text-ghost font-sans selection:bg-indigo-400/35 selection:text-ghost relative min-h-[100dvh] flex flex-col justify-between">
+    <div className="bg-indigo-950 text-ghost font-sans selection:bg-indigo-400/35 selection:text-ghost relative isolate min-h-[100dvh] flex flex-col justify-between">
       {/* SVG Refraction Filter Definition */}
       <RefractionFilter />
 
