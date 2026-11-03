@@ -85,14 +85,14 @@ const ContactMe = () => {
           </h2>
 
           <p className="text-indigo-200/90 text-base sm:text-lg mb-8 leading-relaxed font-normal">
-            Have a project in mind, an engineering opportunity, or want to talk tech? The fastest way to reach me is by email at{" "}
+            Have a project in mind or want to talk tech? The fastest way to reach me is by email at{" "}
             <a
               href={`mailto:${personalInfo.email}`}
               className="underline font-semibold text-ghost hover:text-indigo-300 transition-colors focus-visible:ring-2 focus-visible:ring-indigo-400 rounded"
             >
               {personalInfo.email}
             </a>{" "}
-            or via the message form below. I typically respond within 24 hours.
+            — I typically respond within a day, or connect with me on GitHub and LinkedIn below.
           </p>
 
           <div className="space-y-4 mb-8">
@@ -143,7 +143,7 @@ const ContactMe = () => {
               Send a Message
             </h3>
             <p className="text-indigo-200/85 mb-6 text-sm">
-              Looking to connect or hire? Drop your name, email, and project scope below.
+              Have a question or an opportunity? Send me a message.
             </p>
 
             <AnimatePresence>
@@ -158,7 +158,7 @@ const ContactMe = () => {
                     <FaCheck className="text-sm" />
                   </div>
                   <p className="text-sm font-medium">
-                    Thank you! Your message has been sent successfully.
+                    Thank you! Your message has been sent.
                   </p>
                 </motion.div>
               )}
