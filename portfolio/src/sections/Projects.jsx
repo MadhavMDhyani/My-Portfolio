@@ -21,7 +21,13 @@ const Projects = () => {
         </h2>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div
+        className={
+          projects.length >= 3
+            ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            : "grid grid-cols-1 md:grid-cols-2 gap-8"
+        }
+      >
         {projects.map((project, index) => (
           <motion.div
             key={project.id}
@@ -34,6 +40,16 @@ const Projects = () => {
             <TiltCard maxTilt={7} className="h-full">
               <div className="p-7 sm:p-9 flex flex-col justify-between h-full relative overflow-hidden">
                 <div>
+                  {project.image && (
+                    <img
+                      src={project.image}
+                      alt={`${project.title} screenshot`}
+                      loading="lazy"
+                      width="640"
+                      height="360"
+                      className="w-full aspect-video object-cover rounded-2xl mb-5 border border-ghost/15"
+                    />
+                  )}
                   <h3 className="font-display-title text-2xl sm:text-3xl text-ghost tracking-wide mb-3">
                     {project.title}
                   </h3>
