@@ -45,7 +45,7 @@ const Hero = () => {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
-      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
     },
   };
 
@@ -173,51 +173,78 @@ const Hero = () => {
             </motion.div>
           </div>
 
-          {/* Right Profile & Floating Badges Graphic */}
+          {/* Right: Profile + Floating Badges — contained in a padded wrapper */}
           <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="relative flex justify-center items-center"
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            className="relative flex-shrink-0 z-10 flex justify-center"
+            style={{ willChange: "transform" }}
           >
-            {/* Backend Tech Badges floating */}
-            <div className="absolute -top-3 -left-4 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass animate-bounce [animation-duration:3.5s]">
-              <FaJava className="text-indigo-300 text-xl" />
-              <span className="text-xs font-semibold text-ghost">Java</span>
-            </div>
+            {/**
+             * Padded wrapper gives absolute badges a bounded reference box.
+             * p-10 (40 px) = the "bleed zone" around the image for the badges.
+             * Badges use inset values ≤ padding, so they stay within the flex item
+             * and are never clipped by the section's overflow-hidden.
+             */}
+            <div className="relative p-10">
+              {/* ── Floating Tech Badges ── */}
+              <div
+                className="absolute top-3 left-1 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass animate-bounce [animation-duration:3.5s]"
+                style={{ willChange: "transform" }}
+              >
+                <FaJava className="text-indigo-300 text-xl" />
+                <span className="text-xs font-semibold text-ghost">Java</span>
+              </div>
 
-            <div className="absolute top-1/4 -right-5 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass animate-bounce [animation-duration:4s] [animation-delay:0.3s]">
-              <SiSpringboot className="text-indigo-300 text-xl" />
-              <span className="text-xs font-semibold text-ghost">Spring Boot</span>
-            </div>
+              <div
+                className="absolute top-1/4 right-1 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass animate-bounce [animation-duration:4s] [animation-delay:0.3s]"
+                style={{ willChange: "transform" }}
+              >
+                <SiSpringboot className="text-indigo-300 text-xl" />
+                <span className="text-xs font-semibold text-ghost">Spring Boot</span>
+              </div>
 
-            <div className="absolute -bottom-3 left-4 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass">
-              <SiMysql className="text-indigo-200 text-xl" />
-              <span className="text-xs font-semibold text-ghost">MySQL</span>
-            </div>
+              <div
+                className="absolute bottom-3 left-10 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass"
+                style={{ willChange: "transform" }}
+              >
+                <SiMysql className="text-indigo-200 text-xl" />
+                <span className="text-xs font-semibold text-ghost">MySQL</span>
+              </div>
 
-            <div className="absolute -bottom-3 -right-2 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass animate-bounce [animation-duration:4.2s] [animation-delay:0.6s]">
-              <FaServer className="text-indigo-300 text-lg" />
-              <span className="text-xs font-semibold text-ghost">REST APIs</span>
-            </div>
+              <div
+                className="absolute bottom-3 right-2 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass animate-bounce [animation-duration:4.2s] [animation-delay:0.6s]"
+                style={{ willChange: "transform" }}
+              >
+                <FaServer className="text-indigo-300 text-lg" />
+                <span className="text-xs font-semibold text-ghost">REST APIs</span>
+              </div>
 
-            <div className="absolute -top-3 right-6 px-3 py-1.5 glass-pill flex items-center gap-2 z-20 shadow-glass">
-              <SiMongodb className="text-indigo-200 text-lg" />
-              <span className="text-xs font-semibold text-ghost">MongoDB</span>
-            </div>
+              <div
+                className="absolute top-3 right-20 px-3 py-1.5 glass-pill flex items-center gap-2 z-20 shadow-glass"
+                style={{ willChange: "transform" }}
+              >
+                <SiMongodb className="text-indigo-200 text-lg" />
+                <span className="text-xs font-semibold text-ghost">MongoDB</span>
+              </div>
 
-            {/* Profile Image Glass Container */}
-            <div className="w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-3xl overflow-hidden glass p-2.5 shadow-2xl relative group">
-              <div className="w-full h-full rounded-2xl overflow-hidden relative">
-                <img
-                  src={PROFILE_PIC}
-                  alt={`${personalInfo.name} Profile`}
-                  width="384"
-                  height="384"
-                  fetchPriority="high"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-indigo-950/40 via-transparent to-transparent pointer-events-none" />
+              {/* ── Profile Image ── */}
+              <div className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl overflow-hidden glass p-2.5 shadow-2xl relative group"
+                style={{ willChange: "transform" }}
+              >
+                <div className="w-full h-full rounded-2xl overflow-hidden relative">
+                  <img
+                    src={PROFILE_PIC}
+                    alt={`${personalInfo.name} Profile`}
+                    width="320"
+                    height="320"
+                    fetchPriority="high"
+                    decoding="async"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-indigo-950/40 via-transparent to-transparent pointer-events-none" />
+                </div>
               </div>
             </div>
           </motion.div>
