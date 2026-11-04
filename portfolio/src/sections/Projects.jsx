@@ -28,6 +28,8 @@ const ProjectImage = ({ src, alt }) => {
         <img
           src={src}
           alt={alt}
+          width="640"
+          height="360"
           loading="lazy"
           decoding="async"
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
