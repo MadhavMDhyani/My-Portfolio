@@ -16,7 +16,7 @@
   <circle cx="120" cy="100" r="6" fill="#7A68E0"/>
   <circle cx="140" cy="100" r="6" fill="#F7F7FF" opacity="0.4"/>
   <circle cx="160" cy="100" r="6" fill="#F7F7FF" opacity="0.2"/>
-  <text x="400" y="210" fill="#F7F7FF" font-family="system-ui, sans-serif" font-weight="700" font-size="34" text-anchor="middle" letter-spacing="1">VOLAITILE FRIDAY</text>
+  <text x="400" y="210" fill="#F7F7FF" font-family="system-ui, sans-serif" font-weight="700" font-size="34" text-anchor="middle" letter-spacing="1">VOLATILE FRIDAY</text>
   <text x="400" y="250" fill="#C9C2F5" font-family="system-ui, sans-serif" font-weight="400" font-size="16" text-anchor="middle">Collaborative Workspace &amp; Gemini AI</text>
   <rect x="270" y="280" width="120" height="32" rx="16" fill="#F7F7FF" fill-opacity="0.1" stroke="#F7F7FF" stroke-opacity="0.2"/>
   <text x="330" y="301" fill="#F7F7FF" font-family="system-ui, sans-serif" font-size="12" text-anchor="middle">React &amp; Node</text>

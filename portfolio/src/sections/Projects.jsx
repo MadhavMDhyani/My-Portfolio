@@ -33,7 +33,7 @@ const ProjectImage = ({ project }) => {
   );
 };
 
-const real = (v) => (typeof v === "string" && v.trim() && !v.trim().startsWith("[ADD") ? v : null);
+const real = (v) => (typeof v === "string" && v.trim() && !v.trim().startsWith("[" + "ADD") ? v : null);
 
 const Projects = () => {
   return (
