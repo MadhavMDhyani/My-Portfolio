@@ -17,9 +17,9 @@
   <circle cx="140" cy="100" r="6" fill="#F7F7FF" opacity="0.4"/>
   <circle cx="160" cy="100" r="6" fill="#F7F7FF" opacity="0.2"/>
   <text x="400" y="210" fill="#F7F7FF" font-family="system-ui, sans-serif" font-weight="700" font-size="32" text-anchor="middle" letter-spacing="1">SPRING BOOT JOURNAL APP</text>
-  <text x="400" y="250" fill="#C9C2F5" font-family="system-ui, sans-serif" font-weight="400" font-size="16" text-anchor="middle">Secure RESTful Journaling Backend &amp; JWT Auth</text>
+  <text x="400" y="250" fill="#C9C2F5" font-family="system-ui, sans-serif" font-weight="400" font-size="16" text-anchor="middle">Spring Boot 3, MongoDB Atlas &amp; Redis Cloud</text>
   <rect x="250" y="280" width="140" height="32" rx="16" fill="#F7F7FF" fill-opacity="0.1" stroke="#F7F7FF" stroke-opacity="0.2"/>
   <text x="320" y="301" fill="#F7F7FF" font-family="system-ui, sans-serif" font-size="12" text-anchor="middle">Java &amp; Spring Boot</text>
   <rect x="410" y="280" width="140" height="32" rx="16" fill="#F7F7FF" fill-opacity="0.1" stroke="#F7F7FF" stroke-opacity="0.2"/>
-  <text x="480" y="301" fill="#F7F7FF" font-family="system-ui, sans-serif" font-size="12" text-anchor="middle">REST &amp; Spring Security</text>
+  <text x="480" y="301" fill="#F7F7FF" font-family="system-ui, sans-serif" font-size="12" text-anchor="middle">MongoDB &amp; Redis</text>
 </svg>
