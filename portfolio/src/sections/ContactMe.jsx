@@ -12,7 +12,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 const ContactMe = () => {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", message: "", _honey: "" });
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
@@ -23,6 +23,21 @@ const ContactMe = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Honeypot check — bots fill hidden fields, humans don't
+    if (formData._honey) return;
+
+    // Basic client-side validation
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setError("Please fill in all fields before sending.");
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
     setSending(true);
     setError("");
 
@@ -55,7 +70,7 @@ const ContactMe = () => {
       )
       .then(() => {
         setSubmitted(true);
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({ name: "", email: "", message: "", _honey: "" });
       })
       .catch((err) => {
         console.error("EmailJS submission error:", err);
@@ -168,6 +183,7 @@ const ContactMe = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
+                  role="alert"
                   className="mb-6 p-4 rounded-2xl glass border border-red-400/40 bg-red-950/40 text-red-200 text-sm font-medium"
                 >
                   {error}
@@ -175,7 +191,18 @@ const ContactMe = () => {
               )}
             </AnimatePresence>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+              {/* Honeypot — hidden from humans, bots fill it */}
+              <input
+                type="text"
+                name="_honey"
+                value={formData._honey}
+                onChange={handleChange}
+                style={{ display: "none" }}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+              />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="contact-name" className="sr-only">
@@ -189,6 +216,8 @@ const ContactMe = () => {
                     onChange={handleChange}
                     placeholder="Your name"
                     required
+                    aria-required="true"
+                    autoComplete="name"
                     className="w-full px-5 py-3.5 rounded-2xl glass text-ghost placeholder-indigo-200/50 border border-ghost/15 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-ghost/40 transition-all text-sm min-h-[44px]"
                   />
                 </div>
@@ -204,6 +233,8 @@ const ContactMe = () => {
                     onChange={handleChange}
                     placeholder="Your email address"
                     required
+                    aria-required="true"
+                    autoComplete="email"
                     className="w-full px-5 py-3.5 rounded-2xl glass text-ghost placeholder-indigo-200/50 border border-ghost/15 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-ghost/40 transition-all text-sm min-h-[44px]"
                   />
                 </div>
@@ -220,6 +251,8 @@ const ContactMe = () => {
                   onChange={handleChange}
                   placeholder="Write your message here..."
                   required
+                  aria-required="true"
+                  autoComplete="off"
                   rows={4}
                   className="w-full px-5 py-3.5 rounded-2xl glass text-ghost placeholder-indigo-200/50 border border-ghost/15 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-ghost/40 transition-all text-sm resize-none"
                 />

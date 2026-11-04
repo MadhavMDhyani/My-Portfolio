@@ -19,9 +19,6 @@ const TechnicalProficiency = () => {
     }
   };
 
-  // Double skills list for infinite marquee looping
-  const marqueeSkills = [...skills, ...skills];
-
   return (
     <section id="skills" className="py-20 relative z-10 overflow-hidden">
       <div className="container mx-auto px-6 md:px-12">
@@ -40,22 +37,41 @@ const TechnicalProficiency = () => {
             Technical Proficiency
           </h2>
           <p className="text-sm sm:text-base text-indigo-200/90 mt-4 leading-relaxed">
-            A versatile developer with hands-on expertise in modern technologies, tools, and frameworks, dedicated to building efficient, scalable, and user-centric solutions.
+            A backend-focused developer with hands-on experience in Java, Spring Boot, and databases, complemented by working knowledge of modern frontend tools and DevOps practices.
           </p>
         </motion.div>
 
         {/* Infinite Tech Marquee */}
-        <div className="relative mt-12 mb-8 py-4 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-          <div className="flex w-max gap-4 animate-marquee hover:[animation-play-state:paused] cursor-pointer">
-            {marqueeSkills.map((skill, index) => {
+        <div
+          className="relative mt-12 mb-8 py-4 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+          aria-label="Technologies I work with"
+        >
+          <div className="flex w-max gap-4 animate-marquee hover:[animation-play-state:paused] motion-reduce:[animation-play-state:paused] cursor-pointer">
+            {skills.map((skill) => {
               const Icon = skill.icon;
               return (
                 <div
-                  key={`${skill.id}-${index}`}
+                  key={`marquee-a-${skill.id}`}
                   className="glass-pill px-5 py-2.5 flex items-center gap-3 border border-ghost/20 shadow-glass hover:border-ghost/50 transition-all select-none"
                 >
-                  <Icon className="text-indigo-300 text-lg flex-shrink-0" />
+                  <Icon className="text-indigo-300 text-lg flex-shrink-0" aria-hidden="true" />
                   <span className="text-sm font-semibold text-ghost whitespace-nowrap">
+                    {skill.name}
+                  </span>
+                </div>
+              );
+            })}
+            {/* Duplicate for seamless loop — hidden from assistive tech */}
+            {skills.map((skill) => {
+              const Icon = skill.icon;
+              return (
+                <div
+                  key={`marquee-b-${skill.id}`}
+                  aria-hidden="true"
+                  className="glass-pill px-5 py-2.5 flex items-center gap-3 border border-ghost/20 shadow-glass hover:border-ghost/50 transition-all select-none"
+                >
+                  <Icon className="text-indigo-300 text-lg flex-shrink-0" aria-hidden="true" />
+                  <span className="text-sm font-semibold text-ghost whitespace-nowrap" tabIndex={-1}>
                     {skill.name}
                   </span>
                 </div>
