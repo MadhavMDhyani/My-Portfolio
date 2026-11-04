@@ -208,6 +208,8 @@ const ThreeHeroScene = () => {
 
       const handleVisibilityChange = () => {
         isTabActive = !document.hidden;
+        // Reset delta reference so the first frame after returning doesn't spike
+        if (!document.hidden) lastFrameTime = 0;
       };
       document.addEventListener("visibilitychange", handleVisibilityChange);
 
@@ -224,9 +226,10 @@ const ThreeHeroScene = () => {
       canvasEl.addEventListener("webglcontextlost", handleContextLost, false);
       canvasEl.addEventListener("webglcontextrestored", handleContextRestored, false);
 
-      // Render Loop
+      // Render Loop — uses delta time for frame-rate-independent lerp
       let clock = new THREE.Clock();
       let frameCount = 0;
+      let lastFrameTime = 0; // seconds; tracks previous frame's elapsed time
 
       const animate = () => {
         if (!renderer || !scene || !camera) return;
@@ -242,9 +245,14 @@ const ThreeHeroScene = () => {
 
         const time = clock.getElapsedTime();
 
-        // Parallax lerp
-        mouseX += (targetX - mouseX) * 0.05;
-        mouseY += (targetY - mouseY) * 0.05;
+        // Delta time (capped at 50 ms to skip lag spikes when tab was hidden)
+        const dt = lastFrameTime === 0 ? 0.016 : Math.min(time - lastFrameTime, 0.05);
+        lastFrameTime = time;
+
+        // Frame-rate-independent exponential lerp (k=4 → ~86 % of way in 0.5 s)
+        const alpha = 1 - Math.exp(-4 * dt);
+        mouseX += (targetX - mouseX) * alpha;
+        mouseY += (targetY - mouseY) * alpha;
 
         orbMesh.rotation.y = time * 0.15 + mouseX * 0.8 + scrollY * 1.2;
         orbMesh.rotation.x = time * 0.1 + mouseY * 0.8;

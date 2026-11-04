@@ -76,17 +76,22 @@
 }
 
 /* Liquid Glass System */
-.glass {
+/* :where() has zero specificity, so utilities like absolute/fixed still win */
+:where(.glass, .glass-strong, .glass-pill) {
   position: relative;
+}
+
+.glass {
   background: linear-gradient(135deg, var(--glass-surface-from) 0%, var(--glass-surface-to) 100%);
   border: 1px solid var(--glass-border);
   box-shadow:
     inset 0 1px 0 var(--glass-highlight),
     inset 0 -1px 0 var(--glass-bottom),
     0 8px 32px 0 var(--glass-shadow);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  /* Only animate compositor-friendly properties; box-shadow is intentionally excluded */
+  transition: border-color 0.3s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass::before {
@@ -112,27 +117,25 @@
 }
 
 .glass-strong {
-  position: relative;
   background: linear-gradient(135deg, rgba(247, 247, 255, 0.2) 0%, rgba(247, 247, 255, 0.06) 100%);
   border: 1px solid rgba(247, 247, 255, 0.28);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
     inset 0 -1px 0 rgba(247, 247, 255, 0.12),
     0 12px 40px 0 var(--glass-shadow);
-  backdrop-filter: blur(24px) saturate(190%);
-  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  backdrop-filter: blur(16px) saturate(170%);
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
 }
 
 .glass-pill {
-  position: relative;
   background: linear-gradient(135deg, rgba(247, 247, 255, 0.14) 0%, rgba(247, 247, 255, 0.04) 100%);
   border: 1px solid var(--glass-border);
   box-shadow:
     inset 0 1px 0 var(--glass-highlight),
     inset 0 -1px 0 var(--glass-bottom),
     0 4px 20px 0 var(--glass-shadow);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(10px) saturate(150%);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
   border-radius: 9999px;
   transition: all 0.3s ease;
 }
@@ -176,7 +179,10 @@
   border-radius: 9999px;
   padding: 0.75rem 2rem;
   box-shadow: 0 0 25px -4px rgba(247, 247, 255, 0.45);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.2s ease;
+  will-change: transform;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -204,7 +210,11 @@
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 4px 20px 0 rgba(11, 7, 36, 0.3);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              background 0.2s ease;
+  will-change: transform;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -220,6 +230,35 @@
 
 .btn-secondary:active {
   transform: translateY(1px) scale(0.97);
+}
+
+/* Subtle, GPU-accelerated float animation for floating chips (constrained to ±8px, ≤2deg) */
+@keyframes gentle-float-1 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-7px) rotate(1.5deg);
+  }
+}
+
+@keyframes gentle-float-2 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(6px) rotate(-1.5deg);
+  }
+}
+
+.animate-float-1 {
+  animation: gentle-float-1 4.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-2 {
+  animation: gentle-float-2 5.2s ease-in-out infinite;
+  will-change: transform;
 }
 
 /* Prefers Reduced Motion Guard */

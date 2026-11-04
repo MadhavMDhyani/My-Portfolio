@@ -1,7 +1,47 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { projects } from "../utils/data";
 import { FaArrowUpRightFromSquare, FaGithub } from "react-icons/fa6";
 import TiltCard from "../components/TiltCard";
+
+/** Renders a project screenshot with a gradient placeholder fallback.
+ *  Never shows raw browser alt-text — the placeholder is always visible. */
+const ProjectImage = ({ src, alt }) => {
+  const [status, setStatus] = useState("loading"); // "loading" | "loaded" | "error"
+
+  return (
+    <div className="w-full aspect-video rounded-2xl mb-5 overflow-hidden border border-ghost/15 relative bg-indigo-900/40">
+      {/* Gradient placeholder — shown while loading or on error */}
+      <div
+        className={`absolute inset-0 bg-gradient-to-br from-indigo-900/80 via-indigo-brand/50 to-indigo-950 flex items-center justify-center transition-opacity duration-500 ${
+          status === "loaded" ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}
+        aria-hidden="true"
+      >
+        <span className="text-indigo-300/40 text-[10px] uppercase tracking-[0.3em]">
+          {status === "error" ? "Screenshot coming soon" : ""}
+        </span>
+      </div>
+
+      {/* Actual image — invisible until loaded, never shows broken icon */}
+      {src && (
+        <img
+          src={src}
+          alt={alt}
+          width="640"
+          height="360"
+          loading="lazy"
+          decoding="async"
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+            status === "loaded" ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={() => setStatus("loaded")}
+          onError={() => setStatus("error")}
+        />
+      )}
+    </div>
+  );
+};
 
 const Projects = () => {
   return (
@@ -34,23 +74,16 @@ const Projects = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: index * 0.15 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: index * 0.1 }}
             className="h-full"
           >
             <TiltCard maxTilt={7} className="h-full">
               <div className="p-7 sm:p-9 flex flex-col justify-between h-full relative overflow-hidden">
                 <div>
-                  {project.image && (
-                    <img
-                      src={project.image}
-                      alt={`${project.title} project screenshot`}
-                      loading="lazy"
-                      width="640"
-                      height="360"
-                      className="w-full aspect-video object-cover rounded-2xl mb-5 border border-ghost/15"
-                      onError={(e) => { e.currentTarget.style.display = "none"; }}
-                    />
-                  )}
+                  <ProjectImage
+                    src={project.image}
+                    alt={`${project.title} project screenshot`}
+                  />
                   <h3 className="font-display-title text-2xl sm:text-3xl text-ghost tracking-wide mb-1">
                     {project.title}
                   </h3>
