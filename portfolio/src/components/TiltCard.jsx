@@ -7,7 +7,7 @@ const TiltCard = ({ children, className = "", maxTilt = 8, ...props }) => {
   const x = useMotionValue(0.5);
   const y = useMotionValue(0.5);
 
-  const springConfig = { damping: 22, stiffness: 260 };
+  const springConfig = { damping: 28, stiffness: 320 };
   const smoothX = useSpring(x, springConfig);
   const smoothY = useSpring(y, springConfig);
 
@@ -53,8 +53,9 @@ const TiltCard = ({ children, className = "", maxTilt = 8, ...props }) => {
           rotateX,
           rotateY,
           transformStyle: "preserve-3d",
+          willChange: "transform",
         }}
-        className={`glass rounded-3xl transition-shadow duration-300 ${className}`}
+        className={`glass rounded-3xl ${className}`}
         {...props}
       >
         {children}

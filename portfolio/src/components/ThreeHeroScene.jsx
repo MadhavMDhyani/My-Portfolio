@@ -208,6 +208,8 @@ const ThreeHeroScene = () => {
 
       const handleVisibilityChange = () => {
         isTabActive = !document.hidden;
+        // Reset delta reference so the first frame after returning doesn't spike
+        if (!document.hidden) lastFrameTime = 0;
       };
       document.addEventListener("visibilitychange", handleVisibilityChange);
 
