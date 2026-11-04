@@ -43,20 +43,43 @@ const Projects = () => {
                   {project.image && (
                     <img
                       src={project.image}
-                      alt={`${project.title} screenshot`}
+                      alt={`${project.title} project screenshot`}
                       loading="lazy"
                       width="640"
                       height="360"
                       className="w-full aspect-video object-cover rounded-2xl mb-5 border border-ghost/15"
+                      onError={(e) => { e.currentTarget.style.display = "none"; }}
                     />
                   )}
-                  <h3 className="font-display-title text-2xl sm:text-3xl text-ghost tracking-wide mb-3">
+                  <h3 className="font-display-title text-2xl sm:text-3xl text-ghost tracking-wide mb-1">
                     {project.title}
                   </h3>
 
-                  <p className="text-indigo-200/90 text-sm sm:text-base leading-relaxed mb-6 font-normal">
-                    {project.description}
-                  </p>
+                  {project.summary && (
+                    <p className="text-indigo-300 text-sm font-semibold mb-3 leading-snug">
+                      {project.summary}
+                    </p>
+                  )}
+
+                  {project.contribution && (
+                    <p className="text-indigo-200/80 text-sm leading-relaxed mb-2">
+                      <span className="font-semibold text-indigo-200">My contribution: </span>
+                      {project.contribution}
+                    </p>
+                  )}
+
+                  {project.result && (
+                    <p className="text-indigo-200/80 text-sm leading-relaxed mb-4">
+                      <span className="font-semibold text-indigo-200">Key result: </span>
+                      {project.result}
+                    </p>
+                  )}
+
+                  {!project.summary && !project.contribution && !project.result && (
+                    <p className="text-indigo-200/90 text-sm sm:text-base leading-relaxed mb-6 font-normal">
+                      {project.description}
+                    </p>
+                  )}
 
                   <div className="flex flex-wrap gap-2 mb-8">
                     {project.technologies?.map((tech, idx) => (

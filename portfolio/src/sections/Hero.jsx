@@ -81,7 +81,7 @@ const Hero = () => {
             </motion.div>
 
             {/* Subheading Greeting */}
-            <motion.h3
+            <motion.p
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
@@ -91,7 +91,7 @@ const Hero = () => {
               <span className="text-ghost font-semibold border-b border-indigo-400/50 pb-0.5">
                 {personalInfo.name}
               </span>
-            </motion.h3>
+            </motion.p>
 
             {/* Animated Headline Per-Word */}
             <motion.h1
@@ -118,7 +118,7 @@ const Hero = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="text-indigo-200/90 text-sm sm:text-base mt-5 leading-relaxed font-normal max-w-lg"
             >
-              I'm a passionate Backend Developer with a strong focus on creating scalable, high-performance, and user-centric web applications. I strive to build seamless digital experiences that solve real-world problems.
+              I'm a Backend Developer specializing in Java, Spring Boot, and scalable REST APIs — focused on building high-performance, production-ready systems that solve real-world problems.
             </motion.p>
 
             {/* CTA Magnetic Action Buttons */}
