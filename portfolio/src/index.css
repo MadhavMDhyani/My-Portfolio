@@ -76,8 +76,12 @@
 }
 
 /* Liquid Glass System */
-.glass {
+/* :where() has zero specificity, so utilities like absolute/fixed still win */
+:where(.glass, .glass-strong, .glass-pill) {
   position: relative;
+}
+
+.glass {
   background: linear-gradient(135deg, var(--glass-surface-from) 0%, var(--glass-surface-to) 100%);
   border: 1px solid var(--glass-border);
   box-shadow:
@@ -113,7 +117,6 @@
 }
 
 .glass-strong {
-  position: relative;
   background: linear-gradient(135deg, rgba(247, 247, 255, 0.2) 0%, rgba(247, 247, 255, 0.06) 100%);
   border: 1px solid rgba(247, 247, 255, 0.28);
   box-shadow:
@@ -125,7 +128,6 @@
 }
 
 .glass-pill {
-  position: relative;
   background: linear-gradient(135deg, rgba(247, 247, 255, 0.14) 0%, rgba(247, 247, 255, 0.04) 100%);
   border: 1px solid var(--glass-border);
   box-shadow:
