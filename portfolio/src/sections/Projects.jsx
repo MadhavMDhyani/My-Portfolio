@@ -4,42 +4,32 @@ import { projects } from "../utils/data";
 import { FaArrowUpRightFromSquare, FaGithub } from "react-icons/fa6";
 import TiltCard from "../components/TiltCard";
 
-/** Renders a project screenshot with a gradient placeholder fallback.
- *  Never shows raw browser alt-text — the placeholder is always visible. */
-const ProjectImage = ({ src, alt }) => {
-  const [status, setStatus] = useState("loading"); // "loading" | "loaded" | "error"
+const ProjectImage = ({ project }) => {
+  const [imgSrc, setImgSrc] = useState(project.image);
+  const [hasError, setHasError] = useState(false);
+
+  const handleError = (e) => {
+    if (project.fallbackImage && imgSrc !== project.fallbackImage) {
+      setImgSrc(project.fallbackImage);
+    } else {
+      setHasError(true);
+      e.currentTarget.style.display = "none";
+    }
+  };
+
+  if (!imgSrc || hasError) return null;
 
   return (
-    <div className="w-full aspect-video rounded-2xl mb-5 overflow-hidden border border-ghost/15 relative bg-indigo-900/40">
-      {/* Gradient placeholder — shown while loading or on error */}
-      <div
-        className={`absolute inset-0 bg-gradient-to-br from-indigo-900/80 via-indigo-brand/50 to-indigo-950 flex items-center justify-center transition-opacity duration-500 ${
-          status === "loaded" ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
-        aria-hidden="true"
-      >
-        <span className="text-indigo-300/40 text-[10px] uppercase tracking-[0.3em]">
-          {status === "error" ? "Screenshot coming soon" : ""}
-        </span>
-      </div>
-
-      {/* Actual image — invisible until loaded, never shows broken icon */}
-      {src && (
-        <img
-          src={src}
-          alt={alt}
-          width="640"
-          height="360"
-          loading="lazy"
-          decoding="async"
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-            status === "loaded" ? "opacity-100" : "opacity-0"
-          }`}
-          onLoad={() => setStatus("loaded")}
-          onError={() => setStatus("error")}
-        />
-      )}
-    </div>
+    <img
+      src={imgSrc}
+      alt={`${project.title} screenshot`}
+      loading="lazy"
+      decoding="async"
+      width="640"
+      height="360"
+      className="w-full aspect-video object-contain bg-indigo-950/60 rounded-2xl mb-5 border border-ghost/15"
+      onError={handleError}
+    />
   );
 };
 
