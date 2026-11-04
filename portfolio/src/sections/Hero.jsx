@@ -1,258 +1,186 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import PROFILE_PIC from "../assets/images/profile-pic.jpg";
-import { FaJava } from "react-icons/fa";
-import {
-  FaGithub,
-  FaLinkedin,
-  FaServer,
-} from "react-icons/fa6";
-import { SiSpringboot, SiMysql, SiMongodb } from "react-icons/si";
-import { personalInfo, STATS } from "../utils/data";
-import StateInfoCard from "../components/StateInfoCard";
-import MagneticButton from "../components/MagneticButton";
-import Hero3DCanvas from "../components/Hero3DCanvas";
+import { motion } from "framer-motion";
+import PROFILE_PIC from "../assets/profile.jpg";
+import { personalInfo } from "../utils/data";
+import { FaGithub, FaLinkedin } from "react-icons/fa6";
+
+const specialties = [
+  {
+    num: "#01",
+    title: "Backend Systems",
+    desc: "Java & Spring Boot microservices architecture",
+  },
+  {
+    num: "#02",
+    title: "REST APIs",
+    desc: "High-performance endpoints & secure JWT auth",
+  },
+  {
+    num: "#03",
+    title: "Databases",
+    desc: "Relational & NoSQL modeling with Redis caching",
+  },
+  {
+    num: "#04",
+    title: "Deployment",
+    desc: "Containerization with Docker & CI/CD workflows",
+  },
+];
 
 const Hero = () => {
-  const sectionRef = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const orbY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.2]);
-
-  const headline = "Building Scalable Backend Systems";
-  const words = headline.split(" ");
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.15,
+        staggerChildren: 0.12,
+        delayChildren: 0.1,
       },
     },
   };
 
-  const wordVariants = {
-    hidden: { opacity: 0, y: 20, filter: "blur(6px)" },
+  const itemVariants = {
+    hidden: { opacity: 0, y: 24 },
     visible: {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
     },
   };
 
   return (
-    <section
-      id="home"
-      ref={sectionRef}
-      className="relative min-h-[100dvh] pt-28 pb-16 px-6 md:px-12 flex flex-col justify-center overflow-hidden"
-    >
-      {/* 3D Scene Background Canvas */}
-      <motion.div style={{ y: orbY }} className="absolute inset-0 -z-10 pointer-events-none">
-        <Hero3DCanvas />
-      </motion.div>
-
-      <motion.div
-        style={{ y: contentY, opacity }}
-        className="container mx-auto max-w-6xl relative z-10"
-      >
-        <div className="flex flex-col-reverse lg:flex-row gap-12 lg:gap-16 items-center justify-between">
-          {/* Left Content */}
-          <div className="text-center lg:text-left max-w-xl">
-            {/* Tag Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-pill border border-ghost/20 mb-6"
-            >
-              <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
-              <span className="text-xs uppercase tracking-widest text-indigo-200 font-semibold">
-                Backend &amp; Cloud Engineering
+    <section id="home" className="relative pt-24 pb-8 px-4 sm:px-6 md:px-8">
+      {/* Hero Rounded Container with Animated Gradient */}
+      <div className="container mx-auto max-w-6xl rounded-b-[2.5rem] rounded-t-2xl md:rounded-[2.5rem] hero-gradient-animate border border-white/[0.08] shadow-2xl p-6 sm:p-10 md:p-14 lg:p-16 flex flex-col justify-between overflow-hidden min-h-[calc(100dvh-8rem)]">
+        
+        {/* Main Content: Left Text + Right Profile */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          
+          {/* Left Column: Heading & Intro */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="lg:col-span-7 flex flex-col items-start"
+          >
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 mb-3">
+              <span className="w-2 h-2 rounded-full bg-[#FF5A1F] animate-pulse" />
+              <span className="text-sm font-medium tracking-wide text-[#E5E5E5] uppercase">
+                Hey, I'm a
               </span>
             </motion.div>
 
-            {/* Subheading Greeting */}
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-lg lg:text-2xl font-medium text-indigo-200"
-            >
-              Hi, I am{" "}
-              <span className="text-ghost font-semibold border-b border-indigo-400/50 pb-0.5">
-                {personalInfo.name}
-              </span>
-            </motion.p>
-
-            {/* Animated Headline Per-Word */}
             <motion.h1
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="font-display-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl mt-3 tracking-wide text-ghost text-balance"
+              variants={itemVariants}
+              className="text-[clamp(2.75rem,7.5vw,5.75rem)] font-bold text-white leading-[1.05] tracking-tight font-sans"
             >
-              {words.map((word, i) => (
-                <motion.span
-                  key={i}
-                  variants={wordVariants}
-                  className="inline-block mr-3"
-                >
-                  {word}
-                </motion.span>
-              ))}
+              Backend
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/70">
+                Developer
+              </span>
             </motion.h1>
 
-            {/* Bio Description */}
             <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-indigo-200/90 text-sm sm:text-base mt-5 leading-relaxed font-normal max-w-lg"
+              variants={itemVariants}
+              className="mt-6 text-base sm:text-lg text-[#D4D4D8] leading-relaxed max-w-xl font-normal"
             >
-              I'm a Backend Developer specializing in Java, Spring Boot, and scalable REST APIs — focused on building high-performance, production-ready systems that solve real-world problems.
+              I architect robust backend systems, secure RESTful APIs, and efficient database architectures with Java, Spring Boot, and modern cloud technologies.
             </motion.p>
 
-            {/* CTA Magnetic Action Buttons */}
+            {/* Action Buttons & Socials */}
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="flex flex-wrap justify-center lg:justify-start gap-4 mt-8"
+              variants={itemVariants}
+              className="mt-8 flex flex-wrap items-center gap-4"
             >
-              <MagneticButton
+              <a
                 href="#projects"
-                className="btn-primary uppercase text-xs tracking-wider"
+                className="btn-primary text-sm font-semibold uppercase tracking-wider min-h-[44px] px-6 rounded-full"
               >
-                View My Work
-              </MagneticButton>
-              <MagneticButton
+                View Projects
+              </a>
+              <a
                 href="#contact"
-                className="btn-secondary uppercase text-xs tracking-wider"
+                className="btn-secondary text-sm font-semibold uppercase tracking-wider min-h-[44px] px-6 rounded-full"
               >
                 Contact Me
-              </MagneticButton>
-            </motion.div>
-
-            {/* Social Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="flex items-center justify-center lg:justify-start gap-4 mt-8"
-            >
-              <span className="text-xs font-semibold text-indigo-300 uppercase tracking-widest">
-                Connect:
-              </span>
-              <a
-                href={personalInfo.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-11 h-11 glass-pill flex items-center justify-center text-ghost hover:text-indigo-300 hover:border-ghost/40 transition-all focus-visible:ring-2 focus-visible:ring-indigo-400"
-                aria-label="GitHub Profile"
-              >
-                <FaGithub className="text-lg" />
               </a>
-              <a
-                href={personalInfo.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-11 h-11 glass-pill flex items-center justify-center text-ghost hover:text-indigo-300 hover:border-ghost/40 transition-all focus-visible:ring-2 focus-visible:ring-indigo-400"
-                aria-label="LinkedIn Profile"
-              >
-                <FaLinkedin className="text-lg" />
-              </a>
-            </motion.div>
-          </div>
 
-          {/* Right: Profile + Floating Badges — contained in a padded wrapper */}
+              <div className="flex items-center gap-3 ml-2">
+                <a
+                  href={personalInfo.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-11 h-11 rounded-full bg-white/[0.08] hover:bg-white/[0.16] border border-white/[0.12] flex items-center justify-center text-white transition-all focus-visible:ring-2 focus-visible:ring-[#FF5A1F]"
+                  aria-label="GitHub Profile"
+                >
+                  <FaGithub className="text-lg" />
+                </a>
+                <a
+                  href={personalInfo.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-11 h-11 rounded-full bg-white/[0.08] hover:bg-white/[0.16] border border-white/[0.12] flex items-center justify-center text-white transition-all focus-visible:ring-2 focus-visible:ring-[#FF5A1F]"
+                  aria-label="LinkedIn Profile"
+                >
+                  <FaLinkedin className="text-lg" />
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Right Column: Profile Photo with Mask Feathering */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
+            initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-            className="relative flex-shrink-0 z-10 flex justify-center"
-            style={{ willChange: "transform" }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            className="lg:col-span-5 flex flex-col items-center lg:items-end justify-center"
           >
-            {/**
-             * Padded wrapper gives absolute badges a bounded reference box.
-             * p-10 (40 px) = the "bleed zone" around the image for the badges.
-             * Badges use inset values ≤ padding, so they stay within the flex item
-             * and are never clipped by the section's overflow-hidden.
-             */}
-            <div className="relative p-10">
-              {/* ── Floating Tech Badges (constrained to ±7px, ≤1.5deg) ── */}
+            <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-none">
               <div
-                className="absolute top-3 left-1 px-3.5 py-2 glass-pill flex items-center gap-2 z-10 shadow-glass animate-float-1"
+                className="w-full h-[360px] sm:h-[420px] md:h-[460px] rounded-3xl overflow-hidden relative"
+                style={{
+                  maskImage: "linear-gradient(to bottom, black 65%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to bottom, black 65%, transparent 100%)",
+                }}
               >
-                <FaJava className="text-indigo-300 text-xl" />
-                <span className="text-xs font-semibold text-ghost">Java</span>
+                <img
+                  src={PROFILE_PIC}
+                  alt="Madhav Dhyani - Backend Developer"
+                  width="400"
+                  height="500"
+                  loading="eager"
+                  className="w-full h-full object-cover object-top select-none"
+                />
               </div>
 
-              <div
-                className="absolute top-1/4 -right-1 px-3.5 py-2 glass-pill flex items-center gap-2 z-10 shadow-glass animate-float-2 [animation-delay:0.5s]"
-              >
-                <SiSpringboot className="text-indigo-300 text-xl" />
-                <span className="text-xs font-semibold text-ghost">Spring Boot</span>
-              </div>
-
-              <div
-                className="absolute bottom-3 left-8 px-3.5 py-2 glass-pill flex items-center gap-2 z-10 shadow-glass animate-float-1 [animation-delay:1s]"
-              >
-                <SiMysql className="text-indigo-200 text-xl" />
-                <span className="text-xs font-semibold text-ghost">MySQL</span>
-              </div>
-
-              <div
-                className="absolute bottom-3 right-2 px-3.5 py-2 glass-pill flex items-center gap-2 z-10 shadow-glass animate-float-2 [animation-delay:1.5s]"
-              >
-                <FaServer className="text-indigo-300 text-lg" />
-                <span className="text-xs font-semibold text-ghost">REST APIs</span>
-              </div>
-
-              <div
-                className="absolute top-3 right-16 px-3 py-1.5 glass-pill flex items-center gap-2 z-10 shadow-glass animate-float-1 [animation-delay:2s]"
-              >
-                <SiMongodb className="text-indigo-200 text-lg" />
-                <span className="text-xs font-semibold text-ghost">MongoDB</span>
-              </div>
-
-              {/* ── Profile Image Card (higher z-index, relative position) ── */}
-              <div
-                className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl overflow-hidden glass p-2.5 shadow-2xl relative z-20 group"
-                style={{ willChange: "transform" }}
-              >
-                <div className="w-full h-full rounded-2xl overflow-hidden relative">
-                  <img
-                    src={PROFILE_PIC}
-                    alt={`${personalInfo.name} Profile`}
-                    width="320"
-                    height="320"
-                    fetchPriority="high"
-                    decoding="async"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-indigo-950/40 via-transparent to-transparent pointer-events-none" />
-                </div>
+              {/* Tagline Badge */}
+              <div className="mt-2 text-center lg:text-right">
+                <p className="text-xs sm:text-sm text-[#A1A1AA] font-medium tracking-wide">
+                  Building production-ready software with reliability &amp; speed.
+                </p>
               </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Stats Counter Glass Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-16">
-          {STATS.map((stat) => (
-            <StateInfoCard key={stat.id} count={stat.count} label={stat.label} />
+        {/* Bottom Row: 4 Numbered Specialties */}
+        <div className="mt-12 pt-8 border-t border-white/[0.1] grid grid-cols-2 md:grid-cols-4 gap-6">
+          {specialties.map((item) => (
+            <div key={item.num} className="flex flex-col gap-1.5">
+              <span className="text-[#FF5A1F] font-mono text-sm sm:text-base font-bold tracking-wider">
+                {item.num}
+              </span>
+              <h3 className="text-white font-semibold text-base sm:text-lg tracking-tight">
+                {item.title}
+              </h3>
+              <p className="text-[#8A8A8A] text-xs sm:text-sm leading-relaxed">
+                {item.desc}
+              </p>
+            </div>
           ))}
         </div>
-      </motion.div>
+
+      </div>
     </section>
   );
 };
