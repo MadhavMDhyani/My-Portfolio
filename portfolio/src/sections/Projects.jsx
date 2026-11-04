@@ -77,10 +77,9 @@ const Projects = () => {
               <TiltCard maxTilt={7} className="h-full">
                 <div className="p-7 sm:p-9 flex flex-col justify-between h-full relative overflow-hidden">
                   <div>
-                    <ProjectImage
-                      src={project.image}
-                      alt={`${project.title} project screenshot`}
-                    />
+                    {project.image && (
+                      <ProjectImage project={project} />
+                    )}
                     <h3 className="font-display-title text-2xl sm:text-3xl text-ghost tracking-wide mb-1">
                       {project.title}
                     </h3>
