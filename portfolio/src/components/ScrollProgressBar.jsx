@@ -10,7 +10,7 @@ const ScrollProgressBar = () => {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-indigo-400 via-indigo-200 to-ghost origin-left z-[60] shadow-[0_0_12px_rgba(122,104,224,0.8)]"
+      className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#FF5A1F] to-[#C2410C] origin-left z-[60]"
       style={{ scaleX }}
     />
   );

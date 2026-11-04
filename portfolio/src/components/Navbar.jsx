@@ -1,46 +1,31 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import LOGO from "../assets/images/logo.png";
-import { MENU_LINKS } from "../utils/data";
 import { FaBars, FaXmark } from "react-icons/fa6";
+
+const navLinks = [
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "Projects", href: "#projects" },
+  { label: "Contact", href: "#contact" },
+];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [hasResume, setHasResume] = useState(false);
 
-  useEffect(() => {
-    fetch("/resume.pdf", { method: "HEAD" })
-      .then((res) => {
-        const type = res.headers.get("content-type") || "";
-        if (res.ok && !type.includes("text/html")) {
-          setHasResume(true);
-        }
-      })
-      .catch(() => setHasResume(false));
-  }, []);
-
-  // Hide on scroll-down, show on scroll-up
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > 100) {
-        if (currentScrollY > lastScrollY && !isOpen) {
-          setIsVisible(false);
-        } else {
-          setIsVisible(true);
-        }
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
       } else {
-        setIsVisible(true);
+        setIsScrolled(false);
       }
-      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY, isOpen]);
+  }, []);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -54,9 +39,9 @@ const Navbar = () => {
     };
   }, [isOpen]);
 
-  // Active section tracking with IntersectionObserver
+  // Track active section
   useEffect(() => {
-    const sections = MENU_LINKS.map((item) => document.getElementById(item.to)).filter(Boolean);
+    const sections = navLinks.map((item) => document.getElementById(item.href.replace("#", ""))).filter(Boolean);
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -80,57 +65,47 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 py-4 pointer-events-none">
-        <motion.nav
-          initial={{ y: -80, opacity: 0 }}
-          animate={{ y: isVisible ? 0 : -100, opacity: isVisible ? 1 : 0 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="pointer-events-auto w-full max-w-4xl"
-          aria-label="Main Navigation"
-        >
-          <div className="glass-pill liquid-refraction px-4 sm:px-6 py-2.5 flex items-center justify-between border border-ghost/20 shadow-glass">
-            {/* Logo */}
-            <a
-              href="#home"
-              className="flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-indigo-400 rounded-lg py-1"
-              aria-label="Madhav Dhyani Home"
-            >
-              <img
-                src={LOGO}
-                alt="Madhav Dhyani Logo"
-                className="h-8 w-auto object-contain brightness-125"
-                width="32"
-                height="32"
-              />
-              <span className="font-display-title text-xl text-ghost tracking-wide hidden sm:inline-block">
-                MADHAV DHYANI
-              </span>
-            </a>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? "bg-[#0E0E0E]/85 backdrop-blur-md border-b border-white/[0.08] py-3 sm:py-4 shadow-lg shadow-black/20"
+            : "bg-transparent py-5 sm:py-6"
+        }`}
+      >
+        <div className="container mx-auto px-6 max-w-6xl flex items-center justify-between">
+          {/* Logo / Name Left */}
+          <a
+            href="#home"
+            className="flex items-center gap-2 group focus-visible:ring-2 focus-visible:ring-[#FF5A1F] rounded-lg p-1"
+            aria-label="Madhav Dhyani - Home"
+          >
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FF5A1F] group-hover:scale-125 transition-transform" />
+            <span className="font-semibold text-lg tracking-tight text-white">
+              Madhav Dhyani
+            </span>
+          </a>
 
-            {/* Desktop Navigation Links with Stretching Active Indicator */}
-            <ul className="hidden md:flex items-center gap-1 lg:gap-2">
-              {MENU_LINKS.map((item) => {
-                const isActive = activeSection === item.to;
+          {/* Nav Links Right & CTA (Desktop) */}
+          <nav className="hidden md:flex items-center gap-8" aria-label="Main Navigation">
+            <ul className="flex items-center gap-6">
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.href.replace("#", "");
                 return (
-                  <li key={item.id} className="relative">
+                  <li key={link.label}>
                     <a
-                      href={`#${item.to}`}
-                      className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 block rounded-full focus-visible:ring-2 focus-visible:ring-indigo-400 ${
+                      href={link.href}
+                      className={`text-sm font-medium transition-colors duration-200 py-2 min-h-[44px] inline-flex items-center relative ${
                         isActive
-                          ? "text-ghost font-semibold"
-                          : "text-indigo-200 hover:text-ghost"
+                          ? "text-white font-semibold"
+                          : "text-[#8A8A8A] hover:text-white"
                       }`}
                     >
-                      {item.label}
+                      {link.label}
                       {isActive && (
-                        <motion.div
-                          layoutId="navbar-active-indicator"
-                          className="absolute inset-0 bg-indigo-400/25 border border-indigo-200/30 rounded-full -z-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)]"
-                          transition={{
-                            type: "spring",
-                            stiffness: 400,
-                            damping: 32,
-                          }}
+                        <motion.span
+                          layoutId="active-nav-indicator"
+                          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#FF5A1F] rounded-full"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
                         />
                       )}
                     </a>
@@ -139,112 +114,116 @@ const Navbar = () => {
               })}
             </ul>
 
-            {/* Right Controls */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              {hasResume && (
-                <a
-                  href="/resume.pdf"
-                  download="Madhav_Dhyani_Resume.pdf"
-                  className="hidden sm:inline-flex btn-secondary text-xs uppercase tracking-wider font-semibold py-2 px-4 min-h-[44px]"
+            {/* White pill "Get in touch" button with orange circular arrow icon */}
+            <a
+              href="#contact"
+              className="btn-pill-white text-sm font-semibold text-[#0E0E0E] bg-white rounded-full pl-5 pr-2 py-2 flex items-center gap-2.5 shadow-sm group hover:bg-neutral-100 transition-all min-h-[44px]"
+            >
+              <span>Get in touch</span>
+              <span className="arrow-icon w-7 h-7 rounded-full bg-[#FF5A1F] text-white flex items-center justify-center transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
                 >
-                  Resume
-                </a>
-              )}
+                  <path
+                    d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+            </a>
+          </nav>
 
-              {/* Hire Me Desktop Button */}
-              <a
-                href="#contact"
-                className="hidden md:inline-flex btn-primary text-xs uppercase tracking-wider font-semibold py-2.5 px-6 min-h-[44px]"
-              >
-                Hire Me
-              </a>
-
-              {/* Mobile Hamburger Toggle Button */}
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="md:hidden w-11 h-11 rounded-full glass flex items-center justify-center text-ghost hover:text-indigo-200 focus-visible:ring-2 focus-visible:ring-indigo-400"
-                aria-label={isOpen ? "Close menu" : "Open menu"}
-                aria-expanded={isOpen}
-              >
-                {isOpen ? <FaXmark className="text-lg" /> : <FaBars className="text-lg" />}
-              </button>
-            </div>
-          </div>
-        </motion.nav>
+          {/* Mobile Hamburger Toggle */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden w-11 h-11 rounded-full bg-[#151515] border border-white/[0.08] flex items-center justify-center text-white focus-visible:ring-2 focus-visible:ring-[#FF5A1F]"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+          >
+            {isOpen ? <FaXmark className="text-lg" /> : <FaBars className="text-lg" />}
+          </button>
+        </div>
       </header>
 
-      {/* Mobile Menu Glass Drawer */}
+      {/* Mobile Animated Fullscreen Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 bg-indigo-950/75 backdrop-blur-md md:hidden flex flex-col justify-center px-6"
-            onClick={closeMenu}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-40 bg-[#0E0E0E]/95 backdrop-blur-xl md:hidden flex flex-col justify-between pt-28 pb-12 px-8"
           >
-            <motion.div
-              initial={{ scale: 0.92, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.92, y: 20 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="glass-strong rounded-3xl p-6 border border-ghost/25 shadow-2xl max-w-sm w-full mx-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between pb-4 border-b border-indigo-200/15 mb-4">
-                <span className="font-display-title text-2xl text-ghost tracking-wide">
-                  MENU
-                </span>
-                <button
-                  onClick={closeMenu}
-                  className="w-11 h-11 rounded-full glass flex items-center justify-center text-ghost"
-                  aria-label="Close menu"
-                >
-                  <FaXmark className="text-base" />
-                </button>
-              </div>
-
-              <ul className="flex flex-col gap-2">
-                {MENU_LINKS.map((item) => {
-                  const isActive = activeSection === item.to;
+            <div className="flex flex-col gap-6">
+              <span className="text-xs font-semibold tracking-widest uppercase text-[#8A8A8A]">
+                Navigation
+              </span>
+              <ul className="flex flex-col gap-4">
+                {navLinks.map((link, idx) => {
+                  const isActive = activeSection === link.href.replace("#", "");
                   return (
-                    <li key={item.id}>
+                    <motion.li
+                      key={link.label}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.05 + 0.1 }}
+                    >
                       <a
-                        href={`#${item.to}`}
+                        href={link.href}
                         onClick={closeMenu}
-                        className={`w-full min-h-[44px] flex items-center px-4 py-3 rounded-2xl text-base font-medium transition-all ${
-                          isActive
-                            ? "bg-indigo-400/25 text-ghost border border-indigo-200/30"
-                            : "text-indigo-200 hover:text-ghost hover:bg-ghost/10"
+                        className={`text-2xl font-bold transition-colors py-2 flex items-center justify-between min-h-[44px] ${
+                          isActive ? "text-[#FF5A1F]" : "text-white hover:text-[#FF5A1F]"
                         }`}
                       >
-                        {item.label}
+                        <span>{link.label}</span>
+                        {isActive && <span className="w-2 h-2 rounded-full bg-[#FF5A1F]" />}
                       </a>
-                    </li>
+                    </motion.li>
                   );
                 })}
               </ul>
+            </div>
 
-              <div className="mt-6 pt-4 border-t border-indigo-200/15 flex flex-col gap-2">
-                {hasResume && (
-                  <a
-                    href="/resume.pdf"
-                    download="Madhav_Dhyani_Resume.pdf"
-                    onClick={closeMenu}
-                    className="btn-secondary w-full text-center justify-center py-3 text-sm uppercase tracking-wider font-semibold"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="pt-6 border-t border-white/[0.08]"
+            >
+              <a
+                href="#contact"
+                onClick={closeMenu}
+                className="btn-pill-white w-full text-base font-semibold text-[#0E0E0E] bg-white rounded-full py-3 px-6 flex items-center justify-between shadow-lg"
+              >
+                <span>Get in touch</span>
+                <span className="arrow-icon w-8 h-8 rounded-full bg-[#FF5A1F] text-white flex items-center justify-center">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
                   >
-                    Download Resume
-                  </a>
-                )}
-                <a
-                  href="#contact"
-                  onClick={closeMenu}
-                  className="btn-primary w-full text-center justify-center py-3 text-sm uppercase tracking-wider font-semibold"
-                >
-                  Hire Me
-                </a>
-              </div>
+                    <path
+                      d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+              </a>
             </motion.div>
           </motion.div>
         )}
