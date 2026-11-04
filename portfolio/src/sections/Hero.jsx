@@ -56,7 +56,7 @@ const Hero = () => {
       className="relative min-h-[100dvh] pt-28 pb-16 px-6 md:px-12 flex flex-col justify-center overflow-hidden"
     >
       {/* 3D Scene Background Canvas */}
-      <motion.div style={{ y: orbY }} className="absolute inset-0 -z-10">
+      <motion.div style={{ y: orbY }} className="absolute inset-0 -z-10 pointer-events-none">
         <Hero3DCanvas />
       </motion.div>
 
@@ -188,49 +188,45 @@ const Hero = () => {
              * and are never clipped by the section's overflow-hidden.
              */}
             <div className="relative p-10">
-              {/* ── Floating Tech Badges ── */}
+              {/* ── Floating Tech Badges (constrained to ±7px, ≤1.5deg) ── */}
               <div
-                className="absolute top-3 left-1 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass animate-bounce [animation-duration:3.5s]"
-                style={{ willChange: "transform" }}
+                className="absolute top-3 left-1 px-3.5 py-2 glass-pill flex items-center gap-2 z-10 shadow-glass animate-float-1"
               >
                 <FaJava className="text-indigo-300 text-xl" />
                 <span className="text-xs font-semibold text-ghost">Java</span>
               </div>
 
               <div
-                className="absolute top-1/4 right-1 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass animate-bounce [animation-duration:4s] [animation-delay:0.3s]"
-                style={{ willChange: "transform" }}
+                className="absolute top-1/4 -right-1 px-3.5 py-2 glass-pill flex items-center gap-2 z-10 shadow-glass animate-float-2 [animation-delay:0.5s]"
               >
                 <SiSpringboot className="text-indigo-300 text-xl" />
                 <span className="text-xs font-semibold text-ghost">Spring Boot</span>
               </div>
 
               <div
-                className="absolute bottom-3 left-10 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass"
-                style={{ willChange: "transform" }}
+                className="absolute bottom-3 left-8 px-3.5 py-2 glass-pill flex items-center gap-2 z-10 shadow-glass animate-float-1 [animation-delay:1s]"
               >
                 <SiMysql className="text-indigo-200 text-xl" />
                 <span className="text-xs font-semibold text-ghost">MySQL</span>
               </div>
 
               <div
-                className="absolute bottom-3 right-2 px-3.5 py-2 glass-pill flex items-center gap-2 z-20 shadow-glass animate-bounce [animation-duration:4.2s] [animation-delay:0.6s]"
-                style={{ willChange: "transform" }}
+                className="absolute bottom-3 right-2 px-3.5 py-2 glass-pill flex items-center gap-2 z-10 shadow-glass animate-float-2 [animation-delay:1.5s]"
               >
                 <FaServer className="text-indigo-300 text-lg" />
                 <span className="text-xs font-semibold text-ghost">REST APIs</span>
               </div>
 
               <div
-                className="absolute top-3 right-20 px-3 py-1.5 glass-pill flex items-center gap-2 z-20 shadow-glass"
-                style={{ willChange: "transform" }}
+                className="absolute top-3 right-16 px-3 py-1.5 glass-pill flex items-center gap-2 z-10 shadow-glass animate-float-1 [animation-delay:2s]"
               >
                 <SiMongodb className="text-indigo-200 text-lg" />
                 <span className="text-xs font-semibold text-ghost">MongoDB</span>
               </div>
 
-              {/* ── Profile Image ── */}
-              <div className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl overflow-hidden glass p-2.5 shadow-2xl relative group"
+              {/* ── Profile Image Card (higher z-index, relative position) ── */}
+              <div
+                className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl overflow-hidden glass p-2.5 shadow-2xl relative z-20 group"
                 style={{ willChange: "transform" }}
               >
                 <div className="w-full h-full rounded-2xl overflow-hidden relative">

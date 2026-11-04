@@ -230,6 +230,35 @@
   transform: translateY(1px) scale(0.97);
 }
 
+/* Subtle, GPU-accelerated float animation for floating chips (constrained to ±8px, ≤2deg) */
+@keyframes gentle-float-1 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-7px) rotate(1.5deg);
+  }
+}
+
+@keyframes gentle-float-2 {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(6px) rotate(-1.5deg);
+  }
+}
+
+.animate-float-1 {
+  animation: gentle-float-1 4.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-2 {
+  animation: gentle-float-2 5.2s ease-in-out infinite;
+  will-change: transform;
+}
+
 /* Prefers Reduced Motion Guard */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
