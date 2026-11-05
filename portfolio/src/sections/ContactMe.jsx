@@ -75,33 +75,33 @@ const ContactMe = () => {
   };
 
   return (
-    <section id="contact" className="relative pt-8 pb-20 px-4 sm:px-8">
-      <div className="max-w-2xl mx-auto">
+    <section id="contact" className="relative pt-8 pb-20 sm:pb-24 w-full overflow-x-clip">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 flex justify-center">
         
-        {/* Yellow Sticky-Note Card */}
+        {/* Yellow Sticky-Note Card (w-full max-w-2xl) */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          initial={{ opacity: 0, scale: 0.96, y: 20 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="relative bg-[#F2C23E] border-2 border-[#151515] p-6 sm:p-10 shadow-[6px_6px_0_#151515] rotate-[-1deg]"
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="relative w-full max-w-2xl bg-[#F2C23E] border-2 border-[#151515] p-5 sm:p-8 md:p-10 shadow-[4px_4px_0_#151515] sm:shadow-[6px_6px_0_#151515] rotate-[-0.5deg]"
         >
           {/* Top Tape Sticker */}
           <div className="tape-strip w-28 h-6 -top-3 left-1/2 -translate-x-1/2 rotate-1" />
 
           {/* Sticky Header */}
-          <div className="text-center mb-6">
+          <div className="text-center mb-6 sm:mb-8">
             <span className="font-handwriting text-2xl sm:text-3xl text-[#151515] block mb-1">
               say hello!
             </span>
             <div className="inline-block border border-[#151515] bg-white px-4 py-1 font-pixel text-xl sm:text-2xl uppercase tracking-wider text-[#151515] shadow-[2px_2px_0_#151515]">
               CONTACT
             </div>
-            <p className="font-mono text-xs text-[#151515]/80 mt-4 max-w-md mx-auto leading-relaxed">
+            <p className="text-base text-[#151515]/85 mt-4 max-w-md mx-auto leading-relaxed font-normal">
               Got a project, a hard problem, or just want to say hi? Reach out below or at{" "}
               <a
                 href={`mailto:${personalInfo.email}`}
-                className="underline font-bold text-[#151515] hover:text-[#2B4FD8]"
+                className="underline font-bold text-[#151515] hover:text-[#2B4FD8] break-all sm:break-normal"
               >
                 {personalInfo.email}
               </a>
@@ -114,7 +114,7 @@ const ContactMe = () => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="mb-6 p-3 border-2 border-[#151515] bg-[#A8DEC0] flex items-center gap-2.5 text-[#151515] font-mono text-xs font-bold shadow-[2px_2px_0_#151515]"
+                className="mb-6 p-3.5 border-2 border-[#151515] bg-[#A8DEC0] flex items-center gap-2.5 text-[#151515] font-mono text-xs font-bold shadow-[2px_2px_0_#151515]"
               >
                 <FaCheck className="text-sm flex-shrink-0" />
                 <span>Thank you! Your message has been sent successfully.</span>
@@ -127,7 +127,7 @@ const ContactMe = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 role="alert"
-                className="mb-6 p-3 border-2 border-[#151515] bg-[#F0457E] text-white font-mono text-xs font-bold shadow-[2px_2px_0_#151515]"
+                className="mb-6 p-3.5 border-2 border-[#151515] bg-[#F0457E] text-white font-mono text-xs font-bold shadow-[2px_2px_0_#151515]"
               >
                 {error}
               </motion.div>
@@ -148,9 +148,10 @@ const ContactMe = () => {
               aria-hidden="true"
             />
 
+            {/* Name/Email stack below sm */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="contact-name" className="block font-mono text-[11px] font-bold uppercase tracking-wider text-[#151515] mb-1">
+                <label htmlFor="contact-name" className="block font-mono text-xs font-bold uppercase tracking-wider text-[#151515] mb-1.5">
                   Name
                 </label>
                 <input
@@ -163,12 +164,12 @@ const ContactMe = () => {
                   required
                   aria-required="true"
                   autoComplete="name"
-                  className="w-full px-3.5 py-2.5 bg-white border-2 border-[#151515] text-[#151515] placeholder-[#151515]/40 font-mono text-xs focus:outline-none focus:bg-[#FFFDF5] shadow-[2px_2px_0_#151515]"
+                  className="w-full px-3.5 py-3 bg-white border-2 border-[#151515] text-[#151515] placeholder-[#151515]/40 text-base focus:outline-none focus:bg-[#FFFDF5] shadow-[2px_2px_0_#151515] min-h-[44px]"
                 />
               </div>
 
               <div>
-                <label htmlFor="contact-email" className="block font-mono text-[11px] font-bold uppercase tracking-wider text-[#151515] mb-1">
+                <label htmlFor="contact-email" className="block font-mono text-xs font-bold uppercase tracking-wider text-[#151515] mb-1.5">
                   Email
                 </label>
                 <input
@@ -181,13 +182,13 @@ const ContactMe = () => {
                   required
                   aria-required="true"
                   autoComplete="email"
-                  className="w-full px-3.5 py-2.5 bg-white border-2 border-[#151515] text-[#151515] placeholder-[#151515]/40 font-mono text-xs focus:outline-none focus:bg-[#FFFDF5] shadow-[2px_2px_0_#151515]"
+                  className="w-full px-3.5 py-3 bg-white border-2 border-[#151515] text-[#151515] placeholder-[#151515]/40 text-base focus:outline-none focus:bg-[#FFFDF5] shadow-[2px_2px_0_#151515] min-h-[44px]"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="contact-message" className="block font-mono text-[11px] font-bold uppercase tracking-wider text-[#151515] mb-1">
+              <label htmlFor="contact-message" className="block font-mono text-xs font-bold uppercase tracking-wider text-[#151515] mb-1.5">
                 Message
               </label>
               <textarea
@@ -199,15 +200,16 @@ const ContactMe = () => {
                 required
                 aria-required="true"
                 rows={4}
-                className="w-full px-3.5 py-2.5 bg-white border-2 border-[#151515] text-[#151515] placeholder-[#151515]/40 font-mono text-xs focus:outline-none focus:bg-[#FFFDF5] shadow-[2px_2px_0_#151515] resize-none"
+                className="w-full px-3.5 py-3 bg-white border-2 border-[#151515] text-[#151515] placeholder-[#151515]/40 text-base focus:outline-none focus:bg-[#FFFDF5] shadow-[2px_2px_0_#151515] resize-none"
               />
             </div>
 
-            <div className="pt-2 flex justify-end">
+            {/* SEND MESSAGE button is full width on phones */}
+            <div className="pt-2 flex justify-end w-full">
               <button
                 type="submit"
                 disabled={sending}
-                className="btn-brutal bg-[#151515] text-white px-7 py-3 font-mono text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2.5 min-h-[44px] cursor-pointer disabled:opacity-60"
+                className="btn-brutal bg-[#151515] text-white px-8 py-3.5 font-mono text-xs sm:text-sm font-bold uppercase tracking-wider inline-flex items-center justify-center gap-2.5 min-h-[44px] w-full sm:w-auto cursor-pointer disabled:opacity-60"
               >
                 <FaPaperPlane className="text-xs" />
                 <span>{sending ? "SENDING..." : "SEND MESSAGE"}</span>

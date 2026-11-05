@@ -19,16 +19,21 @@
   html {
     scroll-behavior: smooth;
     color: #151515;
+    overflow-x: clip;
   }
 
   body {
-    overflow-x: hidden;
+    overflow-x: clip;
     min-height: 100dvh;
-    background-color: #8A8A8A;
-    background-image: 
-      linear-gradient(to right, rgba(255, 255, 255, 0.45) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.45) 1px, transparent 1px);
-    background-size: 40px 40px;
+    background-color: #FBFBF8;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 27px,
+      rgba(0, 0, 0, 0.06) 27px,
+      rgba(0, 0, 0, 0.06) 28px
+    );
+    background-attachment: local;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -41,6 +46,11 @@
   :focus-visible {
     outline: 2px solid #151515;
     outline-offset: 2px;
+  }
+
+  /* Form inputs exactly 16px to prevent iOS zoom */
+  input, textarea, select {
+    font-size: 16px !important;
   }
 }
 
@@ -65,9 +75,11 @@
   will-change: transform;
 }
 
-.btn-brutal:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 5px 5px 0 #151515;
+@media (hover: hover) {
+  .btn-brutal:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0 #151515;
+  }
 }
 
 .btn-brutal:active {
@@ -82,9 +94,11 @@
   transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
-.btn-brutal-sm:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0 #151515;
+@media (hover: hover) {
+  .btn-brutal-sm:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 #151515;
+  }
 }
 
 .btn-brutal-sm:active {
