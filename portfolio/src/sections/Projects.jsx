@@ -3,6 +3,39 @@ import { motion } from "framer-motion";
 import { projects } from "../utils/data";
 import { FaArrowUpRightFromSquare, FaGithub } from "react-icons/fa6";
 
+const cardThemes = [
+  {
+    cardBg: "bg-[#1C1815]",
+    textColor: "text-white",
+    subColor: "text-neutral-300",
+    tabBg: "bg-[#2B4FD8] text-white",
+    dateColor: "text-[#A8DEC0]",
+    borderColor: "border-[#151515]",
+    tapeClass: "tape-strip",
+    date: "● MAR 2026",
+  },
+  {
+    cardBg: "bg-[#F2C23E]",
+    textColor: "text-[#151515]",
+    subColor: "text-[#151515]/85",
+    tabBg: "bg-[#151515] text-[#F2C23E]",
+    dateColor: "text-[#151515]",
+    borderColor: "border-[#151515]",
+    tapeClass: "tape-strip",
+    date: "● JAN 2026",
+  },
+  {
+    cardBg: "bg-[#2B4FD8]",
+    textColor: "text-white",
+    subColor: "text-blue-100",
+    tabBg: "bg-[#F0457E] text-white",
+    dateColor: "text-[#F2C23E]",
+    borderColor: "border-[#151515]",
+    tapeClass: "tape-strip",
+    date: "● DEC 2025",
+  },
+];
+
 const ProjectImage = ({ project }) => {
   const [imgSrc, setImgSrc] = useState(project.image);
   const [hasError, setHasError] = useState(false);
@@ -16,141 +49,155 @@ const ProjectImage = ({ project }) => {
     }
   };
 
-  if (!imgSrc || hasError) return null;
+  if (!imgSrc || hasError) {
+    return (
+      <div className="w-full aspect-video bg-neutral-900 border border-white/20 flex flex-col items-center justify-center p-4 text-center">
+        <span className="font-pixel text-xl text-[#F2C23E]">{project.title}</span>
+        <span className="font-mono text-xs text-white/50 mt-1">Screenshot preview</span>
+      </div>
+    );
+  }
 
   return (
-    <div className="w-full aspect-video rounded-2xl overflow-hidden bg-[#0E0E0E] mb-6 border border-white/[0.08] flex items-center justify-center relative">
-      <img
-        src={imgSrc}
-        alt={`${project.title} screenshot`}
-        loading="lazy"
-        decoding="async"
-        width="640"
-        height="360"
-        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-        onError={handleError}
-      />
-    </div>
+    <img
+      src={imgSrc}
+      alt={`${project.title} screenshot`}
+      loading="lazy"
+      decoding="async"
+      width="640"
+      height="360"
+      className="w-full aspect-video object-cover object-top select-none"
+      onError={handleError}
+    />
   );
 };
 
-const real = (v) => (typeof v === "string" && v.trim() && !v.trim().startsWith("[" + "ADD") ? v : null);
-
 const Projects = () => {
   return (
-    <section id="projects" className="py-16 relative z-10">
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl">
-        
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-12 text-center md:text-left"
-        >
-          <span className="text-xs font-semibold tracking-widest uppercase text-[#FF5A1F]">
-            Selected Works
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-2 tracking-tight">
-            Featured Projects
-          </h2>
-        </motion.div>
+    <section id="projects" className="relative pt-6 pb-24 px-4 sm:px-8">
+      
+      {/* Section Header */}
+      <div className="max-w-4xl mx-auto mb-12 flex flex-col items-start">
+        <div className="inline-block border border-[#151515] bg-[#F2C23E] px-3 py-1 font-mono text-xs font-bold uppercase tracking-wider shadow-[2px_2px_0_#151515] rotate-[-1deg] mb-3">
+          SELECTED WORKS
+        </div>
+        <h2 className="font-pixel text-3xl sm:text-5xl text-[#151515] tracking-tight uppercase">
+          PROJECTS
+        </h2>
+      </div>
 
-        {/* 3 Cards Row (Stacked on Mobile) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {projects.map((project, index) => {
-            const summary = real(project.summary);
-            const contribution = real(project.contribution);
-            const result = real(project.result);
+      {/* Stacked Folder Tab Cards Container */}
+      <div className="max-w-4xl mx-auto space-y-12 md:space-y-16">
+        {projects.map((project, index) => {
+          const theme = cardThemes[index % cardThemes.length];
+          const topOffset = 80 + index * 24;
 
-            return (
+          return (
+            <div
+              key={project.id}
+              className="relative md:sticky transition-transform duration-300"
+              style={{
+                top: `${topOffset}px`,
+                zIndex: index + 10,
+              }}
+            >
+              {/* Angled-Corner Folder Tab */}
+              <div className="flex items-end">
+                <div
+                  className={`folder-tab-clip ${theme.tabBg} border-t border-l border-r border-[#151515] px-6 py-2 font-mono text-xs font-bold tracking-widest uppercase flex items-center gap-2 select-none`}
+                >
+                  <span className="w-2 h-2 rounded-full bg-current" />
+                  <span>PROJECT 0{index + 1}</span>
+                </div>
+              </div>
+
+              {/* Coloured Card Body */}
               <motion.div
-                key={project.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: index * 0.1 }}
-                whileHover={{ y: -6 }}
-                className="bg-[#151515] rounded-3xl p-6 sm:p-7 border border-white/[0.08] hover:border-white/[0.2] transition-colors duration-300 flex flex-col justify-between h-full group"
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className={`${theme.cardBg} ${theme.borderColor} border-2 p-6 sm:p-10 shadow-[6px_6px_0_#151515] grid grid-cols-1 md:grid-cols-12 gap-8 items-center overflow-hidden`}
               >
-                <div>
-                  {project.image && <ProjectImage project={project} />}
+                {/* Left Side: Meta, Title, Description, Links */}
+                <div className="md:col-span-6 flex flex-col justify-between">
+                  <div>
+                    {/* Mono Date with Dot */}
+                    <div className={`font-mono text-xs font-bold tracking-wider ${theme.dateColor} mb-3`}>
+                      {theme.date}
+                    </div>
 
-                  <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-2">
-                    {project.title}
-                  </h3>
+                    {/* Huge Title */}
+                    <h3 className={`font-sans text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight ${theme.textColor} mb-4 leading-tight`}>
+                      {project.title}
+                    </h3>
 
-                  {summary && (
-                    <p className="text-[#FF7D4D] text-sm font-semibold mb-3 leading-snug">
-                      {summary}
+                    {/* One-Line Description */}
+                    <p className={`text-sm sm:text-base leading-relaxed ${theme.subColor} mb-6 font-normal`}>
+                      {project.summary || project.description}
                     </p>
-                  )}
 
-                  {contribution && (
-                    <p className="text-[#A1A1AA] text-sm leading-relaxed mb-2">
-                      <span className="font-semibold text-white">Contribution: </span>
-                      {contribution}
-                    </p>
-                  )}
+                    {/* Tech Pills */}
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-8">
+                      {project.technologies?.map((tech, i) => (
+                        <span
+                          key={i}
+                          className="px-2.5 py-0.5 text-[11px] font-mono font-semibold uppercase border border-current opacity-85 rounded-none"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
 
-                  {result && (
-                    <p className="text-[#A1A1AA] text-sm leading-relaxed mb-4">
-                      <span className="font-semibold text-white">Key result: </span>
-                      {result}
-                    </p>
-                  )}
-
-                  {!summary && !contribution && !result && (
-                    <p className="text-[#A1A1AA] text-sm leading-relaxed mb-6 font-normal">
-                      {project.description}
-                    </p>
-                  )}
-
-                  {/* Tech stack pills */}
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {project.technologies?.map((tech, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1 text-xs font-medium rounded-full bg-white/[0.04] text-[#D4D4D8] border border-white/[0.08]"
+                  {/* Underlined Mono Action Links */}
+                  <div className="flex flex-wrap items-center gap-6 pt-4 border-t border-current/20 font-mono text-xs font-bold uppercase tracking-wider">
+                    {project.liveLink && (
+                      <a
+                        href={project.liveLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`underline underline-offset-4 flex items-center gap-1.5 hover:opacity-75 transition-opacity min-h-[44px]`}
                       >
-                        {tech}
-                      </span>
-                    ))}
+                        <span>VIEW PROJECT</span>
+                        <FaArrowUpRightFromSquare className="text-[10px]" />
+                      </a>
+                    )}
+                    {project.githubLink && (
+                      <a
+                        href={project.githubLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`underline underline-offset-4 flex items-center gap-1.5 hover:opacity-75 transition-opacity min-h-[44px]`}
+                      >
+                        <span>GITHUB REPO</span>
+                        <FaGithub className="text-sm" />
+                      </a>
+                    )}
                   </div>
                 </div>
 
-                {/* Actions */}
-                <div className="flex items-center gap-3 pt-5 border-t border-white/[0.08]">
-                  {project.liveLink && (
-                    <a
-                      href={project.liveLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-primary text-xs uppercase tracking-wider py-2.5 px-5 min-h-[44px] gap-2 font-semibold"
-                    >
-                      <span>Live Demo</span>
-                      <FaArrowUpRightFromSquare className="text-xs" />
-                    </a>
-                  )}
-                  {project.githubLink && (
-                    <a
-                      href={project.githubLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-secondary text-xs uppercase tracking-wider py-2.5 px-5 min-h-[44px] gap-2 font-semibold"
-                    >
-                      <span>GitHub</span>
-                      <FaGithub className="text-sm" />
-                    </a>
-                  )}
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+                {/* Right Side: Framed Screenshot with Corner Tape Pieces */}
+                <div className="md:col-span-6 relative flex justify-center">
+                  <div className="relative p-2 bg-white border border-[#151515] shadow-[4px_4px_0_#151515] w-full max-w-md rotate-1 hover:rotate-0 transition-transform duration-300">
+                    {/* Corner Tape Strips */}
+                    <div className="tape-strip w-12 h-5 -top-2.5 -left-2 rotate-[-25deg]" />
+                    <div className="tape-strip w-12 h-5 -top-2.5 -right-2 rotate-[25deg]" />
+                    <div className="tape-strip w-12 h-5 -bottom-2.5 -left-2 rotate-[20deg]" />
+                    <div className="tape-strip w-12 h-5 -bottom-2.5 -right-2 rotate-[-20deg]" />
 
+                    <div className="overflow-hidden border border-[#151515]/30 bg-neutral-900">
+                      <ProjectImage project={project} />
+                    </div>
+                  </div>
+                </div>
+
+              </motion.div>
+            </div>
+          );
+        })}
       </div>
+
     </section>
   );
 };

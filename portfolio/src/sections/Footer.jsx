@@ -5,39 +5,39 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/[0.08] py-10 bg-[#0E0E0E] text-[#8A8A8A] text-sm relative z-10">
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#FF5A1F]" />
-          <span className="text-white font-semibold">{personalInfo.name}</span>
-          <span className="text-xs text-[#8A8A8A]">• {personalInfo.role}</span>
-        </div>
+    <footer className="border-t border-[#151515] py-10 px-6 sm:px-10 bg-[#FBFBF8] text-center">
+      {/* Handwritten "thanks for stopping by" */}
+      <p className="font-handwriting text-3xl sm:text-4xl text-[#151515] mb-4">
+        thanks for stopping by! ✌️
+      </p>
 
-        <p className="text-xs text-[#8A8A8A]">
-          © {currentYear} {personalInfo.name}. All rights reserved.
-        </p>
-
-        <div className="flex items-center gap-4">
-          <a
-            href={personalInfo.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#8A8A8A] hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-[#FF5A1F] rounded p-1"
-            aria-label="GitHub Profile"
-          >
-            <FaGithub className="text-lg" />
-          </a>
-          <a
-            href={personalInfo.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#8A8A8A] hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-[#FF5A1F] rounded p-1"
-            aria-label="LinkedIn Profile"
-          >
-            <FaLinkedin className="text-lg" />
-          </a>
-        </div>
+      {/* Social links row */}
+      <div className="flex items-center justify-center gap-4 mb-6">
+        <a
+          href={personalInfo.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-mono text-xs font-bold uppercase tracking-wider text-[#151515] hover:text-[#F0457E] flex items-center gap-1.5 underline underline-offset-4"
+        >
+          <FaGithub />
+          <span>GITHUB</span>
+        </a>
+        <span className="text-neutral-400">•</span>
+        <a
+          href={personalInfo.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-mono text-xs font-bold uppercase tracking-wider text-[#151515] hover:text-[#2B4FD8] flex items-center gap-1.5 underline underline-offset-4"
+        >
+          <FaLinkedin />
+          <span>LINKEDIN</span>
+        </a>
       </div>
+
+      {/* Mono Copyright Line */}
+      <p className="font-mono text-[11px] sm:text-xs text-[#151515]/70 tracking-widest uppercase">
+        © {currentYear} {personalInfo.name.toUpperCase()} • ALL RIGHTS RESERVED
+      </p>
     </footer>
   );
 };

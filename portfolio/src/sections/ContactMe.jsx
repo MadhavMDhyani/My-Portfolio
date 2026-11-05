@@ -1,14 +1,7 @@
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { personalInfo } from "../utils/data";
-import {
-  FaEnvelope,
-  FaLocationDot,
-  FaGithub,
-  FaLinkedin,
-  FaCheck,
-  FaPaperPlane,
-} from "react-icons/fa6";
+import { FaPaperPlane, FaCheck } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ContactMe = () => {
@@ -82,194 +75,146 @@ const ContactMe = () => {
   };
 
   return (
-    <section id="contact" className="py-16 relative z-10">
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl">
+    <section id="contact" className="relative pt-8 pb-20 px-4 sm:px-8">
+      <div className="max-w-2xl mx-auto">
+        
+        {/* Yellow Sticky-Note Card */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          className="bg-[#151515] rounded-[2.5rem] p-8 sm:p-12 md:p-16 border border-white/[0.08] shadow-xl overflow-hidden relative"
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="relative bg-[#F2C23E] border-2 border-[#151515] p-6 sm:p-10 shadow-[6px_6px_0_#151515] rotate-[-1deg]"
         >
-          <div className="max-w-3xl">
-            <span className="text-xs font-semibold tracking-widest uppercase text-[#FF5A1F]">
-              Get In Touch
+          {/* Top Tape Sticker */}
+          <div className="tape-strip w-28 h-6 -top-3 left-1/2 -translate-x-1/2 rotate-1" />
+
+          {/* Sticky Header */}
+          <div className="text-center mb-6">
+            <span className="font-handwriting text-2xl sm:text-3xl text-[#151515] block mb-1">
+              say hello!
             </span>
-
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-2 mb-4 tracking-tight">
-              Let's Work Together
-            </h2>
-
-            <p className="text-[#A1A1AA] text-base sm:text-lg mb-8 leading-relaxed font-normal">
-              Have a question, a project opportunity, or want to discuss backend architectures? Send a message directly using the form below or email me at{" "}
+            <div className="inline-block border border-[#151515] bg-white px-4 py-1 font-pixel text-xl sm:text-2xl uppercase tracking-wider text-[#151515] shadow-[2px_2px_0_#151515]">
+              CONTACT
+            </div>
+            <p className="font-mono text-xs text-[#151515]/80 mt-4 max-w-md mx-auto leading-relaxed">
+              Got a project, a hard problem, or just want to say hi? Reach out below or at{" "}
               <a
                 href={`mailto:${personalInfo.email}`}
-                className="underline font-semibold text-white hover:text-[#FF5A1F] transition-colors focus-visible:ring-2 focus-visible:ring-[#FF5A1F] rounded"
+                className="underline font-bold text-[#151515] hover:text-[#2B4FD8]"
               >
                 {personalInfo.email}
-              </a>.
+              </a>
             </p>
-
-            <div className="space-y-4 mb-8">
-              <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-[#FF5A1F]">
-                  <FaEnvelope className="text-lg" />
-                </div>
-                <a
-                  href={`mailto:${personalInfo.email}`}
-                  className="hover:text-[#FF5A1F] text-white font-medium transition-colors focus-visible:ring-2 focus-visible:ring-[#FF5A1F] rounded py-1"
-                >
-                  {personalInfo.email}
-                </a>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-[#FF5A1F]">
-                  <FaLocationDot className="text-lg" />
-                </div>
-                <span className="font-medium text-white">{personalInfo.location}</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 mb-12">
-              <a
-                href={personalInfo.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-11 h-11 rounded-full bg-white/[0.06] hover:bg-white/[0.14] border border-white/[0.1] flex items-center justify-center text-white hover:text-[#FF5A1F] transition-all focus-visible:ring-2 focus-visible:ring-[#FF5A1F]"
-                aria-label="GitHub Profile"
-              >
-                <FaGithub className="text-lg" />
-              </a>
-              <a
-                href={personalInfo.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-11 h-11 rounded-full bg-white/[0.06] hover:bg-white/[0.14] border border-white/[0.1] flex items-center justify-center text-white hover:text-[#FF5A1F] transition-all focus-visible:ring-2 focus-visible:ring-[#FF5A1F]"
-                aria-label="LinkedIn Profile"
-              >
-                <FaLinkedin className="text-lg" />
-              </a>
-            </div>
-
-            {/* Send Message Form */}
-            <div className="pt-8 border-t border-white/[0.08]">
-              <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-2">
-                Send a Message
-              </h3>
-              <p className="text-[#8A8A8A] mb-6 text-sm">
-                Fill out the form and I'll get back to you as soon as possible.
-              </p>
-
-              <AnimatePresence>
-                {submitted && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="mb-6 p-4 rounded-2xl border border-emerald-500/30 bg-emerald-950/30 flex items-center gap-3 text-white"
-                  >
-                    <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
-                      <FaCheck className="text-sm" />
-                    </div>
-                    <p className="text-sm font-medium">
-                      Thank you! Your message has been sent successfully.
-                    </p>
-                  </motion.div>
-                )}
-
-                {error && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    role="alert"
-                    className="mb-6 p-4 rounded-2xl border border-red-500/30 bg-red-950/30 text-red-200 text-sm font-medium"
-                  >
-                    {error}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-                {/* Honeypot field */}
-                <input
-                  type="text"
-                  name="_honey"
-                  value={formData._honey}
-                  onChange={handleChange}
-                  style={{ display: "none" }}
-                  tabIndex={-1}
-                  autoComplete="off"
-                  aria-hidden="true"
-                />
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="contact-name" className="sr-only">
-                      Your Name
-                    </label>
-                    <input
-                      id="contact-name"
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Your name"
-                      required
-                      aria-required="true"
-                      autoComplete="name"
-                      className="w-full px-5 py-3.5 rounded-2xl bg-[#0E0E0E] text-white placeholder-[#8A8A8A] border border-white/[0.08] focus:outline-none focus:ring-1 focus:ring-[#FF5A1F] focus:border-[#FF5A1F] transition-all text-sm min-h-[44px]"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="contact-email" className="sr-only">
-                      Your Email
-                    </label>
-                    <input
-                      id="contact-email"
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="Your email address"
-                      required
-                      aria-required="true"
-                      autoComplete="email"
-                      className="w-full px-5 py-3.5 rounded-2xl bg-[#0E0E0E] text-white placeholder-[#8A8A8A] border border-white/[0.08] focus:outline-none focus:ring-1 focus:ring-[#FF5A1F] focus:border-[#FF5A1F] transition-all text-sm min-h-[44px]"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="contact-message" className="sr-only">
-                    Your Message
-                  </label>
-                  <textarea
-                    id="contact-message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Write your message here..."
-                    required
-                    aria-required="true"
-                    autoComplete="off"
-                    rows={4}
-                    className="w-full px-5 py-3.5 rounded-2xl bg-[#0E0E0E] text-white placeholder-[#8A8A8A] border border-white/[0.08] focus:outline-none focus:ring-1 focus:ring-[#FF5A1F] focus:border-[#FF5A1F] transition-all text-sm resize-none"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={sending}
-                  className="btn-primary uppercase text-xs tracking-wider min-h-[44px] px-8 disabled:opacity-60 disabled:cursor-not-allowed font-semibold flex items-center gap-2 rounded-full"
-                >
-                  <FaPaperPlane className="text-xs" />
-                  <span>{sending ? "Sending..." : "Send Message"}</span>
-                </button>
-              </form>
-            </div>
           </div>
+
+          <AnimatePresence>
+            {submitted && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="mb-6 p-3 border-2 border-[#151515] bg-[#A8DEC0] flex items-center gap-2.5 text-[#151515] font-mono text-xs font-bold shadow-[2px_2px_0_#151515]"
+              >
+                <FaCheck className="text-sm flex-shrink-0" />
+                <span>Thank you! Your message has been sent successfully.</span>
+              </motion.div>
+            )}
+
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                role="alert"
+                className="mb-6 p-3 border-2 border-[#151515] bg-[#F0457E] text-white font-mono text-xs font-bold shadow-[2px_2px_0_#151515]"
+              >
+                {error}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* The Contact Form */}
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            {/* Honeypot hidden input */}
+            <input
+              type="text"
+              name="_honey"
+              value={formData._honey}
+              onChange={handleChange}
+              style={{ display: "none" }}
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+            />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="contact-name" className="block font-mono text-[11px] font-bold uppercase tracking-wider text-[#151515] mb-1">
+                  Name
+                </label>
+                <input
+                  id="contact-name"
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Your Name"
+                  required
+                  aria-required="true"
+                  autoComplete="name"
+                  className="w-full px-3.5 py-2.5 bg-white border-2 border-[#151515] text-[#151515] placeholder-[#151515]/40 font-mono text-xs focus:outline-none focus:bg-[#FFFDF5] shadow-[2px_2px_0_#151515]"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="contact-email" className="block font-mono text-[11px] font-bold uppercase tracking-wider text-[#151515] mb-1">
+                  Email
+                </label>
+                <input
+                  id="contact-email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Your Email"
+                  required
+                  aria-required="true"
+                  autoComplete="email"
+                  className="w-full px-3.5 py-2.5 bg-white border-2 border-[#151515] text-[#151515] placeholder-[#151515]/40 font-mono text-xs focus:outline-none focus:bg-[#FFFDF5] shadow-[2px_2px_0_#151515]"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="contact-message" className="block font-mono text-[11px] font-bold uppercase tracking-wider text-[#151515] mb-1">
+                Message
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="What's on your mind?"
+                required
+                aria-required="true"
+                rows={4}
+                className="w-full px-3.5 py-2.5 bg-white border-2 border-[#151515] text-[#151515] placeholder-[#151515]/40 font-mono text-xs focus:outline-none focus:bg-[#FFFDF5] shadow-[2px_2px_0_#151515] resize-none"
+              />
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <button
+                type="submit"
+                disabled={sending}
+                className="btn-brutal bg-[#151515] text-white px-7 py-3 font-mono text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2.5 min-h-[44px] cursor-pointer disabled:opacity-60"
+              >
+                <FaPaperPlane className="text-xs" />
+                <span>{sending ? "SENDING..." : "SEND MESSAGE"}</span>
+              </button>
+            </div>
+          </form>
+
         </motion.div>
       </div>
     </section>

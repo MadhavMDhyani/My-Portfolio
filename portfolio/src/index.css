@@ -3,215 +3,142 @@
 @tailwind utilities;
 
 :root {
-  /* Design Tokens */
-  --page-bg: #0E0E0E;
-  --surface: #151515;
-  --border: rgba(255, 255, 255, 0.08);
-  --accent: #FF5A1F;
-  --accent-dark: #C2410C;
-  --text: #FFFFFF;
-  --muted: #8A8A8A;
-
-  /* Legacy variables for compatibility */
-  --ghost-rgb: 255 255 255;
-  --indigo-brand-rgb: 255 90 31;
-  --indigo-950-rgb: 14 14 14;
-  --indigo-900-rgb: 21 21 21;
-  --indigo-800-rgb: 30 30 30;
-  --indigo-700-rgb: 194 65 12;
-  --indigo-400-rgb: 255 90 31;
-  --indigo-300-rgb: 255 125 77;
-  --indigo-200-rgb: 212 212 216;
-  --indigo-100-rgb: 244 244 245;
-
-  --ghost: #FFFFFF;
-  --indigo-brand: #FF5A1F;
-  --indigo-950: #0E0E0E;
-  --indigo-900: #151515;
-  --indigo-800: #1A1A1A;
-  --indigo-700: #C2410C;
-  --indigo-400: #FF5A1F;
-  --indigo-300: #FF7D4D;
-  --indigo-200: #A1A1AA;
-  --indigo-100: #F4F4F5;
-
-  --glass-surface-from: rgba(255, 255, 255, 0.05);
-  --glass-surface-to: rgba(255, 255, 255, 0.01);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-border-hover: rgba(255, 255, 255, 0.18);
-  --glass-highlight: rgba(255, 255, 255, 0.1);
-  --glass-bottom: rgba(0, 0, 0, 0.2);
-  --glass-shadow: rgba(0, 0, 0, 0.4);
-
-  --mx: 50%;
-  --my: 50%;
+  --page-gray: #8A8A8A;
+  --paper: #FBFBF8;
+  --ink: #151515;
+  --sticker-yellow: #F2C23E;
+  --sticker-mint: #A8DEC0;
+  --sticker-green: #1FA971;
+  --sticker-pink: #F0457E;
+  --sticker-blue: #2B4FD8;
+  --sticker-orange: #F0602A;
+  --dark-card: #1C1815;
 }
 
 @layer base {
   html {
-    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
     scroll-behavior: smooth;
-    color-scheme: dark;
+    color: #151515;
   }
 
   body {
     overflow-x: hidden;
-    background-color: #0E0E0E;
-    color: #FFFFFF;
     min-height: 100dvh;
+    background-color: #8A8A8A;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.45) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.45) 1px, transparent 1px);
+    background-size: 40px 40px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
-    background-color: rgba(255, 90, 31, 0.35);
-    color: #FFFFFF;
+    background-color: #F2C23E;
+    color: #151515;
   }
 
   :focus-visible {
-    outline: 2px solid #FF5A1F;
-    outline-offset: 3px;
-    border-radius: 6px;
+    outline: 2px solid #151515;
+    outline-offset: 2px;
   }
 }
 
-/* Hero animated gradient */
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+/* Ruled paper background with subtle horizontal lines every 28px */
+.ruled-sheet {
+  background-color: #FBFBF8;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 27px,
+    rgba(0, 0, 0, 0.06) 27px,
+    rgba(0, 0, 0, 0.06) 28px
+  );
+  background-attachment: local;
 }
 
-.hero-gradient-animate {
-  background: linear-gradient(135deg, #FF4D1A 0%, #C2410C 35%, #1A0A05 70%, #0E0E0E 100%);
-  background-size: 200% 200%;
-  animation: gradientShift 12s ease infinite;
-}
-
-/* Clean Button styles */
-.btn-primary {
-  background-color: #FF5A1F;
-  color: #FFFFFF;
-  font-weight: 600;
-  border-radius: 9999px;
-  padding: 0.75rem 1.75rem;
-  transition: transform 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+/* Neo-brutalist button base */
+.btn-brutal {
+  border: 1px solid #151515;
+  box-shadow: 4px 4px 0 #151515;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
   will-change: transform;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
 }
 
-.btn-primary:hover {
-  background-color: #ea4e15;
-  transform: translateY(-2px);
+.btn-brutal:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 #151515;
 }
 
-.btn-primary:active {
-  transform: translateY(0px) scale(0.98);
+.btn-brutal:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 #151515;
 }
 
-.btn-secondary {
-  background-color: rgba(255, 255, 255, 0.05);
-  color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  font-weight: 500;
-  border-radius: 9999px;
-  padding: 0.75rem 1.75rem;
-  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
-  will-change: transform;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
+/* Small brutal button */
+.btn-brutal-sm {
+  border: 1px solid #151515;
+  box-shadow: 2px 2px 0 #151515;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
-.btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.25);
-  transform: translateY(-2px);
+.btn-brutal-sm:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 #151515;
 }
 
-.btn-secondary:active {
-  transform: translateY(0px) scale(0.98);
+.btn-brutal-sm:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0 #151515;
 }
 
-/* White Pill CTA button with orange circular arrow */
-.btn-pill-white {
-  background-color: #FFFFFF;
-  color: #0E0E0E;
-  font-weight: 600;
-  border-radius: 9999px;
-  padding: 0.5rem 0.6rem 0.5rem 1.25rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.625rem;
-  min-height: 44px;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+/* Tape strips on corners of polaroids & cards */
+.tape-strip {
+  position: absolute;
+  background-color: rgba(220, 230, 242, 0.75);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  z-index: 10;
+  backdrop-filter: blur(1px);
 }
 
-.btn-pill-white:hover {
-  opacity: 0.95;
-  transform: translateY(-1px);
+.tape-strip-yellow {
+  background-color: rgba(242, 194, 62, 0.65);
 }
 
-.btn-pill-white:active {
-  transform: translateY(0px) scale(0.98);
+/* Skill stickers with torn/zigzag edge */
+.zigzag-sticker {
+  clip-path: polygon(
+    0% 0%, 4% 5%, 8% 0%, 12% 5%, 16% 0%, 20% 5%, 24% 0%, 28% 5%, 32% 0%, 36% 5%, 40% 0%, 44% 5%, 48% 0%, 52% 5%, 56% 0%, 60% 5%, 64% 0%, 68% 5%, 72% 0%, 76% 5%, 80% 0%, 84% 5%, 88% 0%, 92% 5%, 96% 0%, 100% 5%,
+    100% 95%, 96% 100%, 92% 95%, 88% 100%, 84% 95%, 80% 100%, 76% 95%, 72% 100%, 68% 95%, 64% 100%, 60% 95%, 56% 100%, 52% 95%, 48% 100%, 44% 95%, 40% 100%, 36% 95%, 32% 100%, 28% 95%, 24% 100%, 20% 95%, 16% 100%, 12% 95%, 8% 100%, 4% 95%, 0% 100%
+  );
 }
 
-.btn-pill-white .arrow-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 9999px;
-  background-color: #FF5A1F;
-  color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s ease;
+/* Folder tab angled corner */
+.folder-tab-clip {
+  clip-path: polygon(0% 0%, calc(100% - 16px) 0%, 100% 100%, 0% 100%);
 }
 
-.btn-pill-white:hover .arrow-icon {
-  transform: translateX(2px) translateY(-2px);
+/* Stepped pixel reveal */
+@keyframes pixelSteps {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
 }
 
-/* Glass fallbacks */
-:where(.glass, .glass-strong, .glass-pill) {
-  position: relative;
+.stepped-reveal {
+  animation: pixelSteps 0.8s steps(8) forwards;
 }
 
-.glass {
-  background: #151515;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.glass-strong {
-  background: #151515;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.glass-pill {
-  background: #151515;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 9999px;
-}
-
-/* Reduced Motion */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-  .hero-gradient-animate {
-    animation: none !important;
   }
 }

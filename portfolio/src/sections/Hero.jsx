@@ -1,186 +1,218 @@
 import { motion } from "framer-motion";
 import PROFILE_PIC from "../assets/profile.jpg";
 import { personalInfo } from "../utils/data";
-import { FaGithub, FaLinkedin } from "react-icons/fa6";
-
-const specialties = [
-  {
-    num: "#01",
-    title: "Backend Systems",
-    desc: "Java & Spring Boot microservices architecture",
-  },
-  {
-    num: "#02",
-    title: "REST APIs",
-    desc: "High-performance endpoints & secure JWT auth",
-  },
-  {
-    num: "#03",
-    title: "Databases",
-    desc: "Relational & NoSQL modeling with Redis caching",
-  },
-  {
-    num: "#04",
-    title: "Deployment",
-    desc: "Containerization with Docker & CI/CD workflows",
-  },
-];
 
 const Hero = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-    },
-  };
-
   return (
-    <section id="home" className="relative pt-24 pb-8 px-4 sm:px-6 md:px-8">
-      {/* Hero Rounded Container with Animated Gradient */}
-      <div className="container mx-auto max-w-6xl rounded-b-[2.5rem] rounded-t-2xl md:rounded-[2.5rem] hero-gradient-animate border border-white/[0.08] shadow-2xl p-6 sm:p-10 md:p-14 lg:p-16 flex flex-col justify-between overflow-hidden min-h-[calc(100dvh-8rem)]">
+    <section id="home" className="relative pt-12 pb-16 px-4 sm:px-8 text-center overflow-hidden">
+      
+      {/* Floating Avatar Stickers (Desktop Left & Right) */}
+      <motion.div
+        animate={{ y: [-6, 6, -6] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        className="hidden md:flex absolute left-8 lg:left-14 top-28 flex-col items-center pointer-events-none select-none z-10"
+      >
+        <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-full border-2 border-[#151515] p-0.5 bg-[#F0602A] shadow-[3px_3px_0_#151515] overflow-hidden -rotate-6">
+          <img
+            src={PROFILE_PIC}
+            alt="Madhav avatar sticker"
+            width="64"
+            height="64"
+            className="w-full h-full object-cover rounded-full"
+          />
+        </div>
+      </motion.div>
+
+      <motion.div
+        animate={{ y: [6, -6, 6] }}
+        transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        className="hidden md:flex absolute right-8 lg:right-14 top-36 flex-col items-center pointer-events-none select-none z-10"
+      >
+        <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-full border-2 border-[#151515] p-0.5 bg-[#F0602A] shadow-[3px_3px_0_#151515] overflow-hidden rotate-6">
+          <img
+            src={PROFILE_PIC}
+            alt="Madhav avatar sticker"
+            width="64"
+            height="64"
+            className="w-full h-full object-cover rounded-full"
+          />
+        </div>
+      </motion.div>
+
+      {/* Top Handwritten "my name is" + Squiggle */}
+      <div className="flex flex-col items-center justify-center mb-6">
+        <span className="font-handwriting text-2xl sm:text-3xl text-[#151515] tracking-wide">
+          my name is
+        </span>
+        <svg
+          width="80"
+          height="12"
+          viewBox="0 0 80 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="mt-0.5 text-[#151515]"
+          aria-hidden="true"
+        >
+          <path
+            d="M2 7C14 2 24 10 38 6C52 2 64 9 78 5"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+        </svg>
+      </div>
+
+      {/* Main Name Box Container with Flanking Stickers */}
+      <div className="relative inline-block mx-auto max-w-full">
         
-        {/* Main Content: Left Text + Right Profile */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          
-          {/* Left Column: Heading & Intro */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="lg:col-span-7 flex flex-col items-start"
-          >
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-full bg-[#FF5A1F] animate-pulse" />
-              <span className="text-sm font-medium tracking-wide text-[#E5E5E5] uppercase">
-                Hey, I'm a
-              </span>
-            </motion.div>
+        {/* Desktop Absolute Sticker 1 (Top Left): "MADE THINGS" */}
+        <motion.div
+          initial={{ scale: 0, rotate: -15 }}
+          animate={{ scale: 1, rotate: -3 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.2 }}
+          whileHover={{ rotate: 3, scale: 1.05 }}
+          className="hidden md:block absolute -top-8 -left-20 z-20"
+        >
+          <span className="bg-[#A8DEC0] text-[#151515] border border-[#151515] px-3.5 py-1 rounded-full text-xs font-mono font-bold tracking-wider shadow-[2px_2px_0_#151515] inline-block cursor-default select-none">
+            MADE THINGS
+          </span>
+        </motion.div>
 
-            <motion.h1
-              variants={itemVariants}
-              className="text-[clamp(2.75rem,7.5vw,5.75rem)] font-bold text-white leading-[1.05] tracking-tight font-sans"
-            >
-              Backend
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/70">
-                Developer
-              </span>
-            </motion.h1>
+        {/* Desktop Absolute Sticker 2 (Top Right): "SWEAT THE DETAILS" */}
+        <motion.div
+          initial={{ scale: 0, rotate: 15 }}
+          animate={{ scale: 1, rotate: 3 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.3 }}
+          whileHover={{ rotate: -3, scale: 1.05 }}
+          className="hidden md:block absolute -top-8 -right-24 z-20"
+        >
+          <span className="bg-[#F2C23E] text-[#151515] border border-[#151515] px-3.5 py-1 rounded-full text-xs font-mono font-bold tracking-wider shadow-[2px_2px_0_#151515] inline-block cursor-default select-none">
+            SWEAT THE DETAILS
+          </span>
+        </motion.div>
 
-            <motion.p
-              variants={itemVariants}
-              className="mt-6 text-base sm:text-lg text-[#D4D4D8] leading-relaxed max-w-xl font-normal"
-            >
-              I architect robust backend systems, secure RESTful APIs, and efficient database architectures with Java, Spring Boot, and modern cloud technologies.
-            </motion.p>
-
-            {/* Action Buttons & Socials */}
-            <motion.div
-              variants={itemVariants}
-              className="mt-8 flex flex-wrap items-center gap-4"
-            >
-              <a
-                href="#projects"
-                className="btn-primary text-sm font-semibold uppercase tracking-wider min-h-[44px] px-6 rounded-full"
-              >
-                View Projects
-              </a>
-              <a
-                href="#contact"
-                className="btn-secondary text-sm font-semibold uppercase tracking-wider min-h-[44px] px-6 rounded-full"
-              >
-                Contact Me
-              </a>
-
-              <div className="flex items-center gap-3 ml-2">
-                <a
-                  href={personalInfo.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-11 h-11 rounded-full bg-white/[0.08] hover:bg-white/[0.16] border border-white/[0.12] flex items-center justify-center text-white transition-all focus-visible:ring-2 focus-visible:ring-[#FF5A1F]"
-                  aria-label="GitHub Profile"
-                >
-                  <FaGithub className="text-lg" />
-                </a>
-                <a
-                  href={personalInfo.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-11 h-11 rounded-full bg-white/[0.08] hover:bg-white/[0.16] border border-white/[0.12] flex items-center justify-center text-white transition-all focus-visible:ring-2 focus-visible:ring-[#FF5A1F]"
-                  aria-label="LinkedIn Profile"
-                >
-                  <FaLinkedin className="text-lg" />
-                </a>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Right Column: Profile Photo with Mask Feathering */}
-          <motion.div
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-            className="lg:col-span-5 flex flex-col items-center lg:items-end justify-center"
-          >
-            <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-none">
-              <div
-                className="w-full h-[360px] sm:h-[420px] md:h-[460px] rounded-3xl overflow-hidden relative"
-                style={{
-                  maskImage: "linear-gradient(to bottom, black 65%, transparent 100%)",
-                  WebkitMaskImage: "linear-gradient(to bottom, black 65%, transparent 100%)",
-                }}
-              >
-                <img
-                  src={PROFILE_PIC}
-                  alt="Madhav Dhyani - Backend Developer"
-                  width="400"
-                  height="500"
-                  loading="eager"
-                  className="w-full h-full object-cover object-top select-none"
-                />
-              </div>
-
-              {/* Tagline Badge */}
-              <div className="mt-2 text-center lg:text-right">
-                <p className="text-xs sm:text-sm text-[#A1A1AA] font-medium tracking-wide">
-                  Building production-ready software with reliability &amp; speed.
-                </p>
-              </div>
-            </div>
-          </motion.div>
+        {/* Mobile Stickers Row (Top) */}
+        <div className="flex md:hidden items-center justify-center gap-2 mb-3">
+          <span className="bg-[#A8DEC0] text-[#151515] border border-[#151515] px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold tracking-wider shadow-[1px_1px_0_#151515] -rotate-2">
+            MADE THINGS
+          </span>
+          <span className="bg-[#F2C23E] text-[#151515] border border-[#151515] px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold tracking-wider shadow-[1px_1px_0_#151515] rotate-2">
+            SWEAT THE DETAILS
+          </span>
         </div>
 
-        {/* Bottom Row: 4 Numbered Specialties */}
-        <div className="mt-12 pt-8 border-t border-white/[0.1] grid grid-cols-2 md:grid-cols-4 gap-6">
-          {specialties.map((item) => (
-            <div key={item.num} className="flex flex-col gap-1.5">
-              <span className="text-[#FF5A1F] font-mono text-sm sm:text-base font-bold tracking-wider">
-                {item.num}
-              </span>
-              <h3 className="text-white font-semibold text-base sm:text-lg tracking-tight">
-                {item.title}
-              </h3>
-              <p className="text-[#8A8A8A] text-xs sm:text-sm leading-relaxed">
-                {item.desc}
-              </p>
-            </div>
-          ))}
+        {/* Central Hand-Drawn Orange Outline Box with Large Pixel Name */}
+        <div className="relative px-6 sm:px-12 py-3 sm:py-5 flex items-center justify-center">
+          {/* Animated Hand-Drawn Orange Rectangle Outline */}
+          <svg
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <motion.path
+              d="M 2,4 C 30,2 70,3 98,3 C 99,25 97,75 98,96 C 70,97 30,96 2,97 C 3,75 1,25 2,4 Z"
+              stroke="#F0602A"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
+            />
+          </svg>
+
+          {/* Stepped Pixel Reveal of Name */}
+          <h1 className="font-pixel text-[clamp(2.5rem,8.5vw,5.5rem)] font-bold tracking-wider text-[#151515] uppercase select-none stepped-reveal leading-none">
+            MADHAV
+          </h1>
+        </div>
+
+        {/* Desktop Absolute Sticker 3 (Bottom Left): "Backend Developer" with Arrow */}
+        <motion.div
+          initial={{ scale: 0, rotate: -10 }}
+          animate={{ scale: 1, rotate: -2 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.4 }}
+          whileHover={{ rotate: 2, scale: 1.05 }}
+          className="hidden md:flex items-center gap-1.5 absolute -bottom-8 -left-28 z-20"
+        >
+          <span className="bg-[#F2C23E] text-[#151515] border border-[#151515] px-3 py-1 text-xs font-mono font-bold shadow-[2px_2px_0_#151515] select-none">
+            {personalInfo.role}
+          </span>
+          <svg width="24" height="20" viewBox="0 0 24 20" fill="none" className="text-[#151515]">
+            <path
+              d="M2 14C8 10 14 6 22 4M22 4L16 2M22 4L19 10"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </motion.div>
+
+        {/* Desktop Absolute Sticker 4 (Bottom Right): Location with Arrow */}
+        <motion.div
+          initial={{ scale: 0, rotate: 10 }}
+          animate={{ scale: 1, rotate: 2 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.5 }}
+          whileHover={{ rotate: -2, scale: 1.05 }}
+          className="hidden md:flex items-center gap-1.5 absolute -bottom-8 -right-28 z-20"
+        >
+          <svg width="24" height="20" viewBox="0 0 24 20" fill="none" className="text-[#151515]">
+            <path
+              d="M22 14C16 10 10 6 2 4M2 4L8 2M2 4L5 10"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span className="bg-[#A8DEC0] text-[#151515] border border-[#151515] px-3 py-1 text-xs font-mono font-bold shadow-[2px_2px_0_#151515] select-none">
+            {personalInfo.location}
+          </span>
+        </motion.div>
+
+        {/* Mobile Stickers Row (Bottom) */}
+        <div className="flex md:hidden items-center justify-center gap-2 mt-3">
+          <span className="bg-[#F2C23E] text-[#151515] border border-[#151515] px-2.5 py-0.5 text-[10px] font-mono font-bold shadow-[1px_1px_0_#151515] -rotate-1">
+            {personalInfo.role}
+          </span>
+          <span className="bg-[#A8DEC0] text-[#151515] border border-[#151515] px-2.5 py-0.5 text-[10px] font-mono font-bold shadow-[1px_1px_0_#151515] rotate-1">
+            {personalInfo.location}
+          </span>
         </div>
 
       </div>
+
+      {/* Monospace Line with Blue Dot: OPEN TO NEW WORK */}
+      <div className="mt-8 sm:mt-10 flex items-center justify-center gap-2 font-mono text-[11px] sm:text-xs tracking-widest uppercase font-bold text-[#151515]">
+        <span className="w-2.5 h-2.5 rounded-full bg-[#2B4FD8] inline-block shadow-[1px_1px_0_#151515]" />
+        <span>OPEN TO NEW WORK AND GOOD PROBLEMS</span>
+      </div>
+
+      {/* Main Headline in Inter Semibold with Sticker Emojis */}
+      <h2 className="mt-5 text-2xl sm:text-3xl md:text-4xl font-semibold text-[#151515] tracking-tight max-w-2xl mx-auto leading-snug">
+        I build backend systems that stay out of your way.{" "}
+        <span className="inline-block hover:scale-125 transition-transform cursor-default" title="Target">
+          🎯
+        </span>{" "}
+        <span className="inline-block hover:scale-125 transition-transform cursor-default text-[#F0457E]" title="Flower">
+          🌸
+        </span>
+      </h2>
+
+      {/* Black CONTACT ME button with blue square icon */}
+      <div className="mt-8 flex justify-center">
+        <a
+          href="#contact"
+          className="btn-brutal bg-[#151515] text-white px-6 py-3 font-mono text-xs font-bold uppercase tracking-wider inline-flex items-center gap-3 transition-all min-h-[44px]"
+        >
+          <span className="w-3.5 h-3.5 bg-[#2B4FD8] inline-block border border-white/30" />
+          <span>CONTACT ME</span>
+        </a>
+      </div>
+
     </section>
   );
 };
