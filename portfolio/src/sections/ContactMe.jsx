@@ -1,14 +1,7 @@
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { personalInfo } from "../utils/data";
-import {
-  FaEnvelope,
-  FaLocationDot,
-  FaGithub,
-  FaLinkedin,
-  FaCheck,
-  FaPaperPlane,
-} from "react-icons/fa6";
+import { FaPaperPlane, FaCheck } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ContactMe = () => {
@@ -82,194 +75,148 @@ const ContactMe = () => {
   };
 
   return (
-    <section id="contact" className="container mx-auto px-6 md:px-12 py-20 relative z-10">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="glass-strong rounded-3xl p-8 md:p-14 border border-ghost/20 shadow-glass overflow-hidden relative"
-      >
-        <div className="max-w-3xl">
-          <span className="text-xs font-semibold tracking-[0.25em] uppercase text-indigo-300">
-            Get In Touch
-          </span>
+    <section id="contact" className="relative pt-8 pb-20 px-4 sm:px-8">
+      <div className="max-w-2xl mx-auto">
+        
+        {/* Yellow Sticky-Note Card */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="relative bg-[#F2C23E] border-2 border-[#151515] p-6 sm:p-10 shadow-[6px_6px_0_#151515] rotate-[-1deg]"
+        >
+          {/* Top Tape Sticker */}
+          <div className="tape-strip w-28 h-6 -top-3 left-1/2 -translate-x-1/2 rotate-1" />
 
-          <h2 className="font-display-title text-4xl sm:text-5xl md:text-6xl text-ghost mt-2 mb-4 tracking-wide">
-            Let's Work Together
-          </h2>
-
-          <p className="text-indigo-200/90 text-base sm:text-lg mb-8 leading-relaxed font-normal">
-            Have a project in mind or want to talk tech? The fastest way to reach me is by email at{" "}
-            <a
-              href={`mailto:${personalInfo.email}`}
-              className="underline font-semibold text-ghost hover:text-indigo-300 transition-colors focus-visible:ring-2 focus-visible:ring-indigo-400 rounded"
-            >
-              {personalInfo.email}
-            </a>{" "}
-            — I typically respond within a day, or connect with me on GitHub and LinkedIn below.
-          </p>
-
-          <div className="space-y-4 mb-8">
-            <div className="flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl glass flex items-center justify-center text-indigo-300">
-                <FaEnvelope className="text-lg" />
-              </div>
+          {/* Sticky Header */}
+          <div className="text-center mb-6">
+            <span className="font-handwriting text-2xl sm:text-3xl text-[#151515] block mb-1">
+              say hello!
+            </span>
+            <div className="inline-block border border-[#151515] bg-white px-4 py-1 font-pixel text-xl sm:text-2xl uppercase tracking-wider text-[#151515] shadow-[2px_2px_0_#151515]">
+              CONTACT
+            </div>
+            <p className="font-mono text-xs text-[#151515]/80 mt-4 max-w-md mx-auto leading-relaxed">
+              Got a project, a hard problem, or just want to say hi? Reach out below or at{" "}
               <a
                 href={`mailto:${personalInfo.email}`}
-                className="hover:text-indigo-300 text-ghost font-medium transition-colors focus-visible:ring-2 focus-visible:ring-indigo-400 rounded py-1"
+                className="underline font-bold text-[#151515] hover:text-[#2B4FD8]"
               >
                 {personalInfo.email}
               </a>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl glass flex items-center justify-center text-indigo-300">
-                <FaLocationDot className="text-lg" />
-              </div>
-              <span className="font-medium text-ghost">{personalInfo.location}</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4 mb-12">
-            <a
-              href={personalInfo.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-12 h-12 glass-pill flex items-center justify-center text-ghost hover:text-indigo-300 hover:border-ghost/40 transition-all focus-visible:ring-2 focus-visible:ring-indigo-400"
-              aria-label="GitHub Profile"
-            >
-              <FaGithub className="text-xl" />
-            </a>
-            <a
-              href={personalInfo.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-12 h-12 glass-pill flex items-center justify-center text-ghost hover:text-indigo-300 hover:border-ghost/40 transition-all focus-visible:ring-2 focus-visible:ring-indigo-400"
-              aria-label="LinkedIn Profile"
-            >
-              <FaLinkedin className="text-xl" />
-            </a>
-          </div>
-
-          {/* Send Message Form */}
-          <div className="pt-8 border-t border-ghost/15">
-            <h3 className="font-display-title text-2xl sm:text-3xl text-ghost tracking-wide mb-2">
-              Send a Message
-            </h3>
-            <p className="text-indigo-200/85 mb-6 text-sm">
-              Have a question or an opportunity? Send me a message.
             </p>
+          </div>
 
-            <AnimatePresence>
-              {submitted && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="mb-6 p-4 rounded-2xl glass border border-indigo-400/40 bg-indigo-900/40 flex items-center gap-3 text-ghost"
-                >
-                  <div className="w-8 h-8 rounded-full bg-indigo-400/30 flex items-center justify-center text-indigo-200">
-                    <FaCheck className="text-sm" />
-                  </div>
-                  <p className="text-sm font-medium">
-                    Thank you! Your message has been sent.
-                  </p>
-                </motion.div>
-              )}
+          <AnimatePresence>
+            {submitted && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="mb-6 p-3 border-2 border-[#151515] bg-[#A8DEC0] flex items-center gap-2.5 text-[#151515] font-mono text-xs font-bold shadow-[2px_2px_0_#151515]"
+              >
+                <FaCheck className="text-sm flex-shrink-0" />
+                <span>Thank you! Your message has been sent successfully.</span>
+              </motion.div>
+            )}
 
-              {error && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  role="alert"
-                  className="mb-6 p-4 rounded-2xl glass border border-red-400/40 bg-red-950/40 text-red-200 text-sm font-medium"
-                >
-                  {error}
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                role="alert"
+                className="mb-6 p-3 border-2 border-[#151515] bg-[#F0457E] text-white font-mono text-xs font-bold shadow-[2px_2px_0_#151515]"
+              >
+                {error}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-            <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-              {/* Honeypot — hidden from humans, bots fill it */}
-              <input
-                type="text"
-                name="_honey"
-                value={formData._honey}
-                onChange={handleChange}
-                style={{ display: "none" }}
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden="true"
-              />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="contact-name" className="sr-only">
-                    Your Name
-                  </label>
-                  <input
-                    id="contact-name"
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Your name"
-                    required
-                    aria-required="true"
-                    autoComplete="name"
-                    className="w-full px-5 py-3.5 rounded-2xl glass text-ghost placeholder-indigo-200/50 border border-ghost/15 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-ghost/40 transition-all text-sm min-h-[44px]"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="contact-email" className="sr-only">
-                    Your Email
-                  </label>
-                  <input
-                    id="contact-email"
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Your email address"
-                    required
-                    aria-required="true"
-                    autoComplete="email"
-                    className="w-full px-5 py-3.5 rounded-2xl glass text-ghost placeholder-indigo-200/50 border border-ghost/15 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-ghost/40 transition-all text-sm min-h-[44px]"
-                  />
-                </div>
-              </div>
+          {/* The Contact Form */}
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            {/* Honeypot hidden input */}
+            <input
+              type="text"
+              name="_honey"
+              value={formData._honey}
+              onChange={handleChange}
+              style={{ display: "none" }}
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+            />
 
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="contact-message" className="sr-only">
-                  Your Message
+                <label htmlFor="contact-name" className="block font-mono text-[11px] font-bold uppercase tracking-wider text-[#151515] mb-1">
+                  Name
                 </label>
-                <textarea
-                  id="contact-message"
-                  name="message"
-                  value={formData.message}
+                <input
+                  id="contact-name"
+                  type="text"
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
-                  placeholder="Write your message here..."
+                  placeholder="Your Name"
                   required
                   aria-required="true"
-                  autoComplete="off"
-                  rows={4}
-                  className="w-full px-5 py-3.5 rounded-2xl glass text-ghost placeholder-indigo-200/50 border border-ghost/15 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-ghost/40 transition-all text-sm resize-none"
+                  autoComplete="name"
+                  className="w-full px-3.5 py-2.5 bg-white border-2 border-[#151515] text-[#151515] placeholder-[#151515]/40 font-mono text-xs focus:outline-none focus:bg-[#FFFDF5] shadow-[2px_2px_0_#151515]"
                 />
               </div>
 
+              <div>
+                <label htmlFor="contact-email" className="block font-mono text-[11px] font-bold uppercase tracking-wider text-[#151515] mb-1">
+                  Email
+                </label>
+                <input
+                  id="contact-email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Your Email"
+                  required
+                  aria-required="true"
+                  autoComplete="email"
+                  className="w-full px-3.5 py-2.5 bg-white border-2 border-[#151515] text-[#151515] placeholder-[#151515]/40 font-mono text-xs focus:outline-none focus:bg-[#FFFDF5] shadow-[2px_2px_0_#151515]"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="contact-message" className="block font-mono text-[11px] font-bold uppercase tracking-wider text-[#151515] mb-1">
+                Message
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="What's on your mind?"
+                required
+                aria-required="true"
+                rows={4}
+                className="w-full px-3.5 py-2.5 bg-white border-2 border-[#151515] text-[#151515] placeholder-[#151515]/40 font-mono text-xs focus:outline-none focus:bg-[#FFFDF5] shadow-[2px_2px_0_#151515] resize-none"
+              />
+            </div>
+
+            <div className="pt-2 flex justify-end">
               <button
                 type="submit"
                 disabled={sending}
-                className="btn-primary uppercase text-xs tracking-wider min-h-[44px] px-8 disabled:opacity-60 disabled:cursor-not-allowed font-semibold flex items-center gap-2"
+                className="btn-brutal bg-[#151515] text-white px-7 py-3 font-mono text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2.5 min-h-[44px] cursor-pointer disabled:opacity-60"
               >
                 <FaPaperPlane className="text-xs" />
-                {sending ? "Sending..." : "Send Message"}
+                <span>{sending ? "SENDING..." : "SEND MESSAGE"}</span>
               </button>
-            </form>
-          </div>
-        </div>
-      </motion.div>
+            </div>
+          </form>
+
+        </motion.div>
+      </div>
     </section>
   );
 };

@@ -1,25 +1,28 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaBars, FaXmark } from "react-icons/fa6";
+import { personalInfo } from "../utils/data";
+import { FaGithub, FaLinkedin, FaEnvelope, FaBars, FaXmark } from "react-icons/fa6";
 
-const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
+const navTabs = [
+  { id: "home", label: "HOME", icon: "★" },
+  { id: "about", label: "ABOUT", icon: "●" },
+  { id: "projects", label: "PROJECTS", icon: "▦" },
 ];
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+  const [activeTab, setActiveTab] = useState("home");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      const sections = navTabs.map((t) => document.getElementById(t.id)).filter(Boolean);
+      const scrollPos = window.scrollY + 120;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const sec = sections[i];
+        if (sec.offsetTop <= scrollPos) {
+          setActiveTab(sec.id);
+          break;
+        }
       }
     };
 
@@ -27,208 +30,126 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
-
-  // Track active section
-  useEffect(() => {
-    const sections = navLinks.map((item) => document.getElementById(item.href.replace("#", ""))).filter(Boolean);
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: "-25% 0px -65% 0px",
-        threshold: 0,
-      }
-    );
-
-    sections.forEach((sec) => observer.observe(sec));
-    return () => observer.disconnect();
-  }, []);
-
-  const closeMenu = () => setIsOpen(false);
-
   return (
-    <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-[#0E0E0E]/85 backdrop-blur-md border-b border-white/[0.08] py-3 sm:py-4 shadow-lg shadow-black/20"
-            : "bg-transparent py-5 sm:py-6"
-        }`}
-      >
-        <div className="container mx-auto px-6 max-w-6xl flex items-center justify-between">
-          {/* Logo / Name Left */}
-          <a
-            href="#home"
-            className="flex items-center gap-2 group focus-visible:ring-2 focus-visible:ring-[#FF5A1F] rounded-lg p-1"
-            aria-label="Madhav Dhyani - Home"
-          >
-            <span className="w-2.5 h-2.5 rounded-full bg-[#FF5A1F] group-hover:scale-125 transition-transform" />
-            <span className="font-semibold text-lg tracking-tight text-white">
-              Madhav Dhyani
-            </span>
-          </a>
+    <header className="sticky top-0 z-40 bg-[#FBFBF8] border-b border-[#151515] px-4 sm:px-6 py-2.5 flex items-center justify-between">
+      {/* Left: Small Logo Mark */}
+      <div className="flex items-center gap-3">
+        <a
+          href="#home"
+          className="w-7 h-7 rounded-full bg-[#F0457E] border border-[#151515] flex items-center justify-center text-white text-xs font-mono font-bold hover:rotate-12 transition-transform shadow-[1px_1px_0_#151515]"
+          aria-label="Madhav Dhyani - Home"
+        >
+          MD
+        </a>
+      </div>
 
-          {/* Nav Links Right & CTA (Desktop) */}
-          <nav className="hidden md:flex items-center gap-8" aria-label="Main Navigation">
-            <ul className="flex items-center gap-6">
-              {navLinks.map((link) => {
-                const isActive = activeSection === link.href.replace("#", "");
-                return (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className={`text-sm font-medium transition-colors duration-200 py-2 min-h-[44px] inline-flex items-center relative ${
-                        isActive
-                          ? "text-white font-semibold"
-                          : "text-[#8A8A8A] hover:text-white"
-                      }`}
-                    >
-                      {link.label}
-                      {isActive && (
-                        <motion.span
-                          layoutId="active-nav-indicator"
-                          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#FF5A1F] rounded-full"
-                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                        />
-                      )}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-
-            {/* White pill "Get in touch" button with orange circular arrow icon */}
+      {/* Center: Monospace Uppercase Tabs (Desktop) */}
+      <nav className="hidden md:flex items-center gap-2" aria-label="Main Navigation">
+        {navTabs.map((tab) => {
+          const isActive = activeTab === tab.id;
+          return (
             <a
-              href="#contact"
-              className="btn-pill-white text-sm font-semibold text-[#0E0E0E] bg-white rounded-full pl-5 pr-2 py-2 flex items-center gap-2.5 shadow-sm group hover:bg-neutral-100 transition-all min-h-[44px]"
+              key={tab.id}
+              href={`#${tab.id}`}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-3.5 py-1 text-xs font-mono font-bold tracking-wider uppercase transition-all flex items-center gap-1.5 ${
+                isActive
+                  ? "bg-[#F2C23E] border border-[#151515] text-[#151515] shadow-[2px_2px_0_#151515]"
+                  : "text-[#151515]/70 hover:text-[#151515] hover:bg-black/5 border border-transparent"
+              }`}
             >
-              <span>Get in touch</span>
-              <span className="arrow-icon w-7 h-7 rounded-full bg-[#FF5A1F] text-white flex items-center justify-center transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 12 12"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
+              {isActive && <span>{tab.icon}</span>}
+              <span>{tab.label}</span>
             </a>
-          </nav>
+          );
+        })}
+      </nav>
 
-          {/* Mobile Hamburger Toggle */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden w-11 h-11 rounded-full bg-[#151515] border border-white/[0.08] flex items-center justify-center text-white focus-visible:ring-2 focus-visible:ring-[#FF5A1F]"
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isOpen}
-          >
-            {isOpen ? <FaXmark className="text-lg" /> : <FaBars className="text-lg" />}
-          </button>
-        </div>
-      </header>
+      {/* Right Side: Round Social Icons + Contact Button */}
+      <div className="flex items-center gap-2 sm:gap-2.5">
+        {/* Yellow round button: LinkedIn */}
+        <a
+          href={personalInfo.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#F2C23E] border border-[#151515] flex items-center justify-center text-[#151515] text-xs shadow-[1px_1px_0_#151515] hover:-translate-y-0.5 transition-transform"
+          aria-label="LinkedIn"
+        >
+          <FaLinkedin />
+        </a>
 
-      {/* Mobile Animated Fullscreen Menu Overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-40 bg-[#0E0E0E]/95 backdrop-blur-xl md:hidden flex flex-col justify-between pt-28 pb-12 px-8"
-          >
-            <div className="flex flex-col gap-6">
-              <span className="text-xs font-semibold tracking-widest uppercase text-[#8A8A8A]">
-                Navigation
-              </span>
-              <ul className="flex flex-col gap-4">
-                {navLinks.map((link, idx) => {
-                  const isActive = activeSection === link.href.replace("#", "");
-                  return (
-                    <motion.li
-                      key={link.label}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.05 + 0.1 }}
-                    >
-                      <a
-                        href={link.href}
-                        onClick={closeMenu}
-                        className={`text-2xl font-bold transition-colors py-2 flex items-center justify-between min-h-[44px] ${
-                          isActive ? "text-[#FF5A1F]" : "text-white hover:text-[#FF5A1F]"
-                        }`}
-                      >
-                        <span>{link.label}</span>
-                        {isActive && <span className="w-2 h-2 rounded-full bg-[#FF5A1F]" />}
-                      </a>
-                    </motion.li>
-                  );
-                })}
-              </ul>
-            </div>
+        {/* Pink round button: GitHub */}
+        <a
+          href={personalInfo.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#F0457E] border border-[#151515] flex items-center justify-center text-white text-xs shadow-[1px_1px_0_#151515] hover:-translate-y-0.5 transition-transform"
+          aria-label="GitHub"
+        >
+          <FaGithub />
+        </a>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="pt-6 border-t border-white/[0.08]"
-            >
+        {/* Green round button: Email */}
+        <a
+          href={`mailto:${personalInfo.email}`}
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#1FA971] border border-[#151515] flex items-center justify-center text-white text-xs shadow-[1px_1px_0_#151515] hover:-translate-y-0.5 transition-transform"
+          aria-label="Email"
+        >
+          <FaEnvelope />
+        </a>
+
+        {/* Outlined "♥ CONTACT" button */}
+        <a
+          href="#contact"
+          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#151515] text-[#151515] font-mono text-xs font-bold uppercase tracking-wider shadow-[2px_2px_0_#151515] hover:bg-[#F2C23E] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all ml-1 min-h-[32px]"
+        >
+          <span className="text-[#F0457E]">♥</span>
+          <span>CONTACT</span>
+        </a>
+
+        {/* Mobile Hamburger Button */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="md:hidden w-8 h-8 rounded border border-[#151515] bg-white flex items-center justify-center text-[#151515] text-sm ml-1 shadow-[1px_1px_0_#151515]"
+          aria-label="Toggle Navigation Menu"
+        >
+          {mobileMenuOpen ? <FaXmark /> : <FaBars />}
+        </button>
+      </div>
+
+      {/* Mobile Dropdown Menu */}
+      {mobileMenuOpen && (
+        <div className="absolute top-full left-0 right-0 bg-[#FBFBF8] border-b border-[#151515] p-4 flex flex-col gap-2 md:hidden z-50 shadow-lg">
+          {navTabs.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
               <a
-                href="#contact"
-                onClick={closeMenu}
-                className="btn-pill-white w-full text-base font-semibold text-[#0E0E0E] bg-white rounded-full py-3 px-6 flex items-center justify-between shadow-lg"
+                key={tab.id}
+                href={`#${tab.id}`}
+                onClick={() => {
+                  setActiveTab(tab.id);
+                  setMobileMenuOpen(false);
+                }}
+                className={`px-4 py-2 font-mono text-xs font-bold tracking-wider uppercase border border-[#151515] flex items-center justify-between ${
+                  isActive ? "bg-[#F2C23E] text-[#151515] shadow-[2px_2px_0_#151515]" : "bg-white text-[#151515]"
+                }`}
               >
-                <span>Get in touch</span>
-                <span className="arrow-icon w-8 h-8 rounded-full bg-[#FF5A1F] text-white flex items-center justify-center">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 12 12"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8"
-                      stroke="currentColor"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
+                <span>{tab.label}</span>
+                {isActive && <span>{tab.icon}</span>}
               </a>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+            );
+          })}
+          <a
+            href="#contact"
+            onClick={() => setMobileMenuOpen(false)}
+            className="px-4 py-2 font-mono text-xs font-bold tracking-wider uppercase border border-[#151515] bg-white flex items-center justify-between mt-1 shadow-[2px_2px_0_#151515]"
+          >
+            <span>CONTACT ME</span>
+            <span className="text-[#F0457E]">♥</span>
+          </a>
+        </div>
+      )}
+    </header>
   );
 };
 
